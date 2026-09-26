@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <!-- 모바일 화면에 최적화된 화면 배율 설정 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>승강기 비상 호출 시스템</title>
+    <style>
+        /* 기본 스타일링 (어두운 배경과 대비되는 고시인성 색상 적용) */
+        body {
+            font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: #2a2a2a;
+            padding: 30px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        /* 언어 선택 드롭다운 */
+        .lang-selector {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+        select {
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 5px;
+            background-color: #444;
+            color: white;
+            border: 1px solid #666;
+        }
+        /* 승강기 정보 영역 */
+        h1 { color: #ff5252; font-size: 24px; margin-bottom: 10px; }
+        .info-box {
+            background-color: #333;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 5px solid #ff5252;
+            text-align: left;
+        }
+        .info-box p { margin: 5px 0; font-size: 16px; font-weight: bold; }
+        
+        /* 버튼 스타일링 (누르기 쉽도록 크고 명확하게) */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+        .btn-call { background-color: #4CAF50; } /* 녹색: 통화 */
+        .btn-call:active { background-color: #45a049; }
+        .btn-sms { background-color: #2196F3; } /* 파란색: 문자 */
+        .btn-sms:active { background-color: #1e88e5; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 다국어 선택 -->
+        <div class="lang-selector">
+            <select id="langSelect" onchange="changeLanguage()">
+                <option value="ko">🇰🇷 한국어</option>
+                <option value="en">🇺🇸 English</option>
+                <option value="ja">🇯🇵 日本語</option>
+                <option value="zh">🇨🇳 中文</option>
+            </select>
+        </div>
+
+        <h1 id="pageTitle">승강기 비상 호출</h1>
+        
+        <!-- 엘리베이터 위치 정보 (수정 필요 부분) -->
+        <div class="info-box">
+            <p id="infoLocation">📍 위치: 00역 1번출구 엘리베이터</p>
+            <p id="infoNumber">🔢 번호: 0102619</p>
+        </div>
+
+        <!-- 1. 전화 연결 버튼 (tel: URI 스킴 사용) -->
+        <a href="tel:02-6311-5382" class="btn btn-call" id="btnCall">
+            📞 역무실 통화 연결
+        </a>
+
+        <!-- 2. 문자 전송 버튼 (JavaScript로 처리) -->
+        <button class="btn btn-sms" id="btnSms" onclick="sendSMS()">
+            💬 1577-1234 문자 신고
+        </button>
+    </div>
+
+    <script>
+        // 엘리베이터 기본 정보 설정 (이 부분을 실제 정보로 수정하세요)
+        const elevatorInfo = {
+            station: "00역 1번출구",
+            number: "0102619"
+        };
+
+        // 3. 다국어 데이터베이스
+        const langData = {
+            ko: {
+                title: "승강기 갇힘 긴급 호출",
+                locPrefix: "📍 위치: ",
+                numPrefix: "🔢 번호: ",
+                btnCall: "📞 역무실 통화 연결",
+                btnSms: "💬 1577-1234 문자 신고",
+                smsBody: `[승강기 갇힘 신고]\n- 위치: ${elevatorInfo.station} 엘리베이터\n- 승강기번호: ${elevatorInfo.number}\n승강기에 갇혔습니다. 신속한 구조 바랍니다.`
+            },
+            en: {
+                title: "Elevator Emergency Call",
+                locPrefix: "📍 Location: ",
+                numPrefix: "🔢 Number: ",
+                btnCall: "📞 Call Station Staff",
+                btnSms: "💬 Send SMS (1577-1234)",
+                smsBody: `[Elevator Emergency]\n- Location: ${elevatorInfo.station} Elevator\n- No: ${elevatorInfo.number}\nI am stuck in the elevator. Please help.`
+            },
+            ja: {
+                title: "エレベーター緊急通報",
+                locPrefix: "📍 位置: ",
+                numPrefix: "🔢 番号: ",
+                btnCall: "📞 駅係員に電話する",
+                btnSms: "💬 SMSを送信 (1577-1234)",
+                smsBody: `[エレベーター閉じ込め]\n- 位置: ${elevatorInfo.station} エレベーター\n- 番号: ${elevatorInfo.number}\nエレベーターに閉じ込められました。救助をお願いします。`
+            },
+            zh: {
+                title: "电梯紧急呼叫",
+                locPrefix: "📍 位置: ",
+                numPrefix: "🔢 编号: ",
+                btnCall: "📞 拨打值班室电话",
+                btnSms: "💬 发送报警短信 (1577-1234)",
+                smsBody: `[电梯困人报警]\n- 位置: ${elevatorInfo.station} 电梯\n- 编号: ${elevatorInfo.number}\n我被困在电梯里了，请速来救援。`
+            }
+        };
+
+        // 언어 변경 함수
+        function changeLanguage() {
+            const lang = document.getElementById('langSelect').value;
+            
+            document.getElementById('pageTitle').innerText = langData[lang].title;
+            document.getElementById('infoLocation').innerText = langData[lang].locPrefix + elevatorInfo.station;
+            document.getElementById('infoNumber').innerText = langData[lang].numPrefix + elevatorInfo.number;
+            document.getElementById('btnCall').innerText = langData[lang].btnCall;
+            document.getElementById('btnSms').innerText = langData[lang].btnSms;
+        }
+
+        // SMS 전송 함수 (OS별 호환성 처리 포함)
+        function sendSMS() {
+            const lang = document.getElementById('langSelect').value;
+            const message = langData[lang].smsBody;
+            const targetNumber = "15771234";
+            
+            // 모바일 OS 구분
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            let smsUrl = "";
+
+            // iOS와 Android의 SMS URI 스킴(`sms:`) 규격 차이 반영 (RFC 5724 표준 기반)
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                // iOS
+                smsUrl = `sms:${targetNumber}&body=${encodeURIComponent(message)}`;
+            } else {
+                // Android 및 기타
+                smsUrl = `sms:${targetNumber}?body=${encodeURIComponent(message)}`;
+            }
+            
+            // 문자 앱 실행
+            window.location.href = smsUrl;
+        }
+
+        // 페이지 로드 시 초기 언어(한국어) 세팅
+        window.onload = function() {
+            changeLanguage();
+        };
+    </script>
+</body>
+</html>
