@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>승강기 비상 호출 시스템</title>
+    <title>비상 연락처</title>
     <style>
         body {
             font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
             background-color: #1e1e1e;
             color: #ffffff;
-            text-align: center;
+            text-align: center; /* 전체 텍스트 가운데 정렬 통일 */
             padding: 20px;
             margin: 0;
         }
@@ -24,7 +24,7 @@
         
         .lang-selector {
             margin-bottom: 20px;
-            text-align: right;
+            text-align: center; /* 언어 선택 창도 가운데 정렬 */
         }
         select {
             padding: 10px 15px;
@@ -33,39 +33,45 @@
             background-color: #444;
             color: white;
             border: 1px solid #666;
+            text-align: center;
         }
         
         h1 { color: #ff5252; font-size: 26px; margin-bottom: 15px; }
+        
+        /* 정보 박스 가운데 정렬 및 디자인 수정 */
         .info-box {
             background-color: #333;
-            padding: 15px;
+            padding: 20px;
             border-radius: 8px;
             margin-bottom: 25px;
-            border-left: 5px solid #ff5252;
-            text-align: left;
+            text-align: center; /* 가운데 정렬 */
+            border: 1px solid #444; /* 왼쪽 빨간 테두리 제거 후 전체 얇은 테두리로 변경 */
         }
-        .info-box p { margin: 5px 0; font-size: 18px; font-weight: bold; }
+        .info-box p { margin: 15px 0; line-height: 1.6; }
+        .label { font-size: 16px; color: #b0bec5; } /* 위치, 승강기번호 타이틀(회색) */
+        .value { font-size: 22px; font-weight: bold; color: #ffffff; } /* 실제 정보(흰색) */
         
-        /* 버튼 크기 및 시인성 강화 */
+        /* 버튼 크기 유지 및 가운데 정렬 */
         .btn {
             display: flex;
             align-items: center;
             justify-content: center;
             width: 100%;
-            min-height: 140px; /* 세로 크기 2배 이상 확대 */
+            min-height: 140px;
             margin-bottom: 20px;
             border-radius: 15px;
-            font-size: 32px; /* 글자 크기 대폭 확대 */
-            font-weight: 900; /* 글씨 굵기 최대 */
+            font-size: 32px;
+            font-weight: 900;
             text-decoration: none;
             color: white;
             border: none;
             cursor: pointer;
             box-sizing: border-box;
-            word-break: keep-all; /* 단어 단위로 줄바꿈 방지 */
+            word-break: keep-all;
             line-height: 1.3;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.4); /* 버튼 입체감 강조 */
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
             transition: transform 0.1s;
+            text-align: center;
         }
         .btn-call { background-color: #4CAF50; } 
         .btn-call:active { background-color: #45a049; transform: scale(0.98); } 
@@ -77,73 +83,80 @@
 <body>
 
     <div class="container">
-        <!-- 다국어 선택 -->
+        <!-- 이모티콘 제거된 다국어 선택 -->
         <div class="lang-selector">
             <select id="langSelect" onchange="changeLanguage()">
-                <option value="ko">🇰🇷 한국어</option>
-                <option value="en">🇺🇸 English</option>
-                <option value="ja">🇯🇵 日本語</option>
-                <option value="zh">🇨🇳 中文</option>
+                <option value="ko">한국어</option>
+                <option value="en">English</option>
+                <option value="ja">日本語</option>
+                <option value="zh">中文</option>
             </select>
         </div>
 
-        <h1 id="pageTitle">승강기 비상 호출</h1>
+        <!-- 제목 변경 -->
+        <h1 id="pageTitle">비상 연락처</h1>
         
-        <!-- 엘리베이터 위치 정보 반영 -->
+        <!-- 엘리베이터 위치 정보 (줄바꿈 적용) -->
         <div class="info-box">
-            <p id="infoLocation">📍 위치: 신금호역 엘리베이터 3호기</p>
-            <p id="infoNumber">🔢 번호: 0102-619</p>
+            <p>
+                <span id="locLabel" class="label">위치</span><br>
+                <span id="locValue" class="value">신금호역 엘리베이터 3호기</span>
+            </p>
+            <p>
+                <span id="numLabel" class="label">승강기번호</span><br>
+                <span id="numValue" class="value">0102-619</span>
+            </p>
         </div>
 
-        <!-- 1. 전화 연결 버튼 -->
+        <!-- 전화 연결 버튼 (이모티콘 제거) -->
         <a href="tel:02-6311-5382" class="btn btn-call" id="btnCall">
-            📞 역무실<br>통화 연결
+            역무실<br>통화 연결
         </a>
 
-        <!-- 2. 문자 전송 버튼 -->
+        <!-- 문자 전송 버튼 (이모티콘 제거) -->
         <button class="btn btn-sms" id="btnSms" onclick="sendSMS()">
-            💬 1577-1234<br>문자 신고
+            1577-1234<br>문자 신고
         </button>
     </div>
 
     <script>
-        // 엘리베이터 상세 정보 입력
         const elevatorInfo = {
             station: "신금호역 엘리베이터 3호기",
             number: "0102-619"
         };
 
+        // 다국어 텍스트 데이터 (이모티콘 제거, 항목명 변경)
         const langData = {
             ko: {
-                title: "승강기 갇힘 긴급 호출",
-                locPrefix: "📍 위치: ",
-                numPrefix: "🔢 번호: ",
-                btnCall: "📞 역무실\n통화 연결",
-                btnSms: "💬 1577-1234\n문자 신고",
+                title: "비상 연락처",
+                locPrefix: "위치",
+                numPrefix: "승강기번호",
+                btnCall: "역무실\n통화 연결",
+                btnSms: "1577-1234\n문자 신고",
                 smsBody: `[승강기 갇힘 신고]\n- 위치: ${elevatorInfo.station}\n- 승강기번호: ${elevatorInfo.number}\n승강기에 갇혔습니다. 신속한 구조 바랍니다.`
             },
             en: {
-                title: "Elevator Emergency Call",
-                locPrefix: "📍 Location: ",
-                numPrefix: "🔢 Number: ",
-                btnCall: "📞 Call Station\nStaff",
-                btnSms: "💬 Send SMS\n(1577-1234)",
+                title: "Emergency Contacts",
+                locPrefix: "Location",
+                numPrefix: "Elevator No.",
+                btnCall: "Call Station\nStaff",
+                btnSms: "Send SMS\n(1577-1234)",
                 smsBody: `[Elevator Emergency]\n- Location: ${elevatorInfo.station}\n- No: ${elevatorInfo.number}\nI am stuck in the elevator. Please help.`
             },
             ja: {
-                title: "エレベーター緊急通報",
-                locPrefix: "📍 位置: ",
-                numPrefix: "🔢 番号: ",
-                btnCall: "📞 駅係員に\n電話する",
-                btnSms: "💬 SMSを送信\n(1577-1234)",
+                title: "緊急連絡先",
+                locPrefix: "位置",
+                numPrefix: "エレベーター番号",
+                btnCall: "駅係員に\n電話する",
+                btnSms: "SMSを送信\n(1577-1234)",
                 smsBody: `[エレベーター閉じ込め]\n- 位置: ${elevatorInfo.station}\n- 番号: ${elevatorInfo.number}\nエレベーターに閉じ込められました。救助をお願いします。`
             },
             zh: {
-                title: "电梯紧急呼叫",
-                locPrefix: "📍 位置: ",
-                numPrefix: "🔢 编号: ",
-                btnCall: "📞 拨打\n值班室电话",
-                btnSms: "💬 发送报警短信\n(1577-1234)",
+                title: "紧急联系方式",
+                locPrefix: "位置",
+                numPrefix: "电梯编号",
+                btnCall: "拨打\n值班室电话",
+                btnSms: "发送报警短信\n(1577-1234)",
                 smsBody: `[电梯困人报警]\n- 位置: ${elevatorInfo.station}\n- 编号: ${elevatorInfo.number}\n我被困在电梯里了，请速来救援。`
             }
         };
@@ -152,10 +165,15 @@
             const lang = document.getElementById('langSelect').value;
             
             document.getElementById('pageTitle').innerText = langData[lang].title;
-            document.getElementById('infoLocation').innerText = langData[lang].locPrefix + elevatorInfo.station;
-            document.getElementById('infoNumber').innerText = langData[lang].numPrefix + elevatorInfo.number;
             
-            // \n 문자를 HTML의 <br> 태그로 변환하여 텍스트 줄바꿈 적용
+            // 줄바꿈이 적용된 HTML 구조로 텍스트 주입
+            document.getElementById('locLabel').innerText = langData[lang].locPrefix;
+            document.getElementById('locValue').innerText = elevatorInfo.station;
+            
+            document.getElementById('numLabel').innerText = langData[lang].numPrefix;
+            document.getElementById('numValue').innerText = elevatorInfo.number;
+            
+            // \n 문자를 <br> 태그로 변환
             document.getElementById('btnCall').innerHTML = langData[lang].btnCall.replace(/\n/g, '<br>');
             document.getElementById('btnSms').innerHTML = langData[lang].btnSms.replace(/\n/g, '<br>');
         }
