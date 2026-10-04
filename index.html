@@ -50,12 +50,11 @@
             letter-spacing: -1.5px;
         }
         
-        /* 2. 공통 버튼 스타일 (SVG 아이콘 배치를 위한 flex 추가) */
+        /* 2. 공통 버튼 스타일 */
         .btn {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 12px; /* 아이콘과 텍스트 사이 간격 */
+            justify-content: center; /* 버튼 내부 콘텐츠 전체를 중앙 정렬 */
             width: 100%;
             min-height: 140px;
             margin-bottom: 20px;
@@ -65,6 +64,13 @@
             box-sizing: border-box;
             transition: transform 0.1s, box-shadow 0.1s;
         }
+
+        /* SVG 아이콘과 텍스트를 묶어주는 래퍼(정렬 핵심) */
+        .btn-content {
+            display: flex;
+            align-items: center;
+            gap: 16px; /* 아이콘과 텍스트 사이 간격 */
+        }
         
         /* 공통 텍스트 및 SVG 아이콘 스타일 */
         .btn-text {
@@ -72,40 +78,40 @@
             font-weight: 900;
             word-break: keep-all;
             line-height: 1.25;
-            text-align: center;
+            text-align: left; /* 아이콘 우측에서 텍스트가 깔끔하게 정렬되도록 좌측 정렬 */
             letter-spacing: -1px;
         }
         .btn-icon {
-            width: 44px;
-            height: 44px;
-            fill: currentColor; /* 부모 요소의 글자색(color)을 그대로 따라감 */
+            width: 48px;
+            height: 48px;
+            fill: currentColor; /* 폰트 색상을 그대로 따라감 */
             flex-shrink: 0;
         }
 
-        /* 버튼 1: 문자 신고 (상단) - 흰색 바탕 + 빨강 테두리/글씨/아이콘 */
+        /* 버튼 1: 문자 신고 (상단) - 빨강 바탕 + 흰색 아이콘/글씨 */
         .btn-sms { 
-            background-color: #ffffff; 
-            color: #E53935; /* 여기서 지정한 색이 글씨와 SVG 아이콘에 동시 적용됨 */
-            border: 4px solid #E53935; 
-            box-shadow: 0 6px 15px rgba(229, 57, 53, 0.15);
-        } 
-        .btn-sms:active { 
-            background-color: #ffebee; 
-            transform: scale(0.98); 
-            box-shadow: 0 3px 8px rgba(229, 57, 53, 0.15);
-        }
-
-        /* 버튼 2: 통화 연결 (중간) - 빨강 바탕 + 흰색 글씨/아이콘 */
-        .btn-call { 
             background-color: #E53935; 
-            color: #ffffff; /* 흰색이 글씨와 SVG 아이콘에 동시 적용됨 */
+            color: #ffffff; 
             border: none;
             box-shadow: 0 6px 15px rgba(229, 57, 53, 0.4);
         } 
-        .btn-call:active { 
+        .btn-sms:active { 
             background-color: #c62828; 
             transform: scale(0.98); 
             box-shadow: 0 3px 8px rgba(229, 57, 53, 0.4);
+        }
+
+        /* 버튼 2: 통화 연결 (중간) - 흰색 바탕 + 빨강 테두리/아이콘/글씨 */
+        .btn-call { 
+            background-color: #ffffff; 
+            color: #E53935; 
+            border: 4px solid #E53935; 
+            box-shadow: 0 6px 15px rgba(229, 57, 53, 0.15);
+        } 
+        .btn-call:active { 
+            background-color: #ffebee; 
+            transform: scale(0.98); 
+            box-shadow: 0 3px 8px rgba(229, 57, 53, 0.15);
         }
 
         /* 3. 승강기 위치 정보 박스 (비율 1.0 = 24px) */
@@ -148,20 +154,24 @@
         <!-- 타이틀 (갇힘 신고) -->
         <h1 id="pageTitle">갇힘 신고</h1>
         
-        <!-- 1. 문자 신고 버튼 (말풍선 SVG 아이콘 삽입) -->
+        <!-- 1. 문자 신고 버튼 (빨강 배경 + 흰색 말풍선 SVG/글씨) -->
         <button class="btn btn-sms" id="btnSms" onclick="sendSMS()">
-            <svg class="btn-icon" viewBox="0 0 24 24">
-                <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
-            </svg>
-            <span class="btn-text" id="textSms">1577-1234<br>문자 신고</span>
+            <div class="btn-content">
+                <svg class="btn-icon" viewBox="0 0 24 24">
+                    <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
+                </svg>
+                <span class="btn-text" id="textSms">1577-1234<br>문자 신고</span>
+            </div>
         </button>
 
-        <!-- 2. 전화 연결 버튼 (전화기 SVG 아이콘 삽입) -->
+        <!-- 2. 전화 연결 버튼 (흰 배경 + 빨강 전화기 SVG/글씨 - 깨짐 없는 둥근 아이콘으로 교체) -->
         <a href="tel:02-6311-5382" class="btn btn-call" id="btnCall">
-            <svg class="btn-icon" viewBox="0 0 24 24">
-                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 1.24 1.24 1.44 2.45.57 3.57-.11.35-.03.74.24 1.02l2.2 2.2z"/>
-            </svg>
-            <span class="btn-text" id="textCall">역무실<br>통화 연결</span>
+            <div class="btn-content">
+                <svg class="btn-icon" viewBox="0 0 24 24">
+                    <path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.2c.28-.27.36-.66.25-1.02C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/>
+                </svg>
+                <span class="btn-text" id="textCall">역무실<br>통화 연결</span>
+            </div>
         </a>
 
         <!-- 3. 엘리베이터 위치 정보 박스 -->
@@ -250,7 +260,6 @@
             document.getElementById('locLabel').innerText = langData[lang].locPrefix;
             document.getElementById('locValue').innerText = locText;
             
-            // SVG 아이콘은 그대로 두고 내부 텍스트만 업데이트하도록 수정
             document.getElementById('textSms').innerHTML = langData[lang].btnSms.replace(/\n/g, '<br>');
             document.getElementById('textCall').innerHTML = langData[lang].btnCall.replace(/\n/g, '<br>');
             
