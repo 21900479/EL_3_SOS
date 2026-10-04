@@ -64,7 +64,7 @@
         .btn {
             display: flex;
             align-items: center;
-            justify-content: center; /* 전체 콘텐츠 그룹을 버튼 중앙에 배치 */
+            justify-content: center; 
             width: 100%;
             height: 140px; 
             margin-bottom: 20px;
@@ -75,30 +75,36 @@
             transition: transform 0.1s, box-shadow 0.1s;
         }
         
-        /* [핵심] 아이콘과 텍스트를 묶어주는 Grid 래퍼 (수직 정렬 및 우측 이동 완벽 통제) */
+        /* [핵심] 텍스트 우측 일치 & 내부 중앙 정렬을 위한 Grid 래퍼 */
         .btn-content {
             display: grid;
-            grid-template-columns: 48px 1fr; /* 좌측 아이콘 48px 고정, 우측 텍스트 나머지 영역 */
+            grid-template-columns: 48px 1fr; /* 좌측 48px 고정(아이콘), 나머지 영역(텍스트) */
             align-items: center;
-            width: 260px; /* 고정 너비로 상하단 버튼의 아이콘 수직선 100% 일치 */
-            gap: 20px; /* 아이콘과 텍스트 사이의 최적 간격 */
-            padding-left: 16px; /* 전체 덩어리를 우측으로 살짝 밀어 시각적 균형감 확보 */
+            width: 300px; /* 전체 덩어리 너비 절대 고정 */
+            gap: 20px; 
+            margin: 0 auto; /* 덩어리를 버튼 정중앙에 배치 */
         }
         
         /* 버튼 내 SVG 아이콘 */
         .btn-icon {
-            width: 100%; /* Grid 칸인 48px에 꽉 차게 맞춤 */
+            width: 100%;
             height: auto;
             fill: currentColor; 
         }
+        
+        /* 이전 단계의 전화기 아이콘 시각적 수직 보정 유지 */
+        .icon-call {
+            margin-left: -4px; 
+        }
 
-        /* 버튼 내 텍스트 */
+        /* 버튼 내 텍스트 (텍스트 자체는 완벽하게 가운데 정렬) */
         .btn-text {
             font-size: 32px; 
             font-weight: 900;
             line-height: 1.3;
-            text-align: left; /* 텍스트는 좌측 정렬하여 아이콘과 나란히 시작 */
+            text-align: center; /* 1fr(텍스트 전용 영역) 안에서 정중앙 정렬 */
             letter-spacing: -1px;
+            width: 100%;
         }
 
         /* 버튼 1: 문자 신고 (상단) - 빨강 바탕 + 흰색 아이콘/글씨 */
@@ -177,23 +183,23 @@
         <!-- 타이틀 (갇힘 신고) -->
         <h1 id="pageTitle">갇힘 신고</h1>
         
-        <!-- 1. 문자 신고 버튼 (빨강 배경 + 흰색 말풍선 SVG/글씨) -->
+        <!-- 1. 문자 신고 버튼 -->
         <button class="btn btn-sms" id="btnSms" onclick="sendSMS()">
             <div class="btn-content">
                 <svg class="btn-icon" viewBox="0 0 24 24">
                     <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
                 </svg>
-                <span class="btn-text" id="textSms">1577-1234<br>문자 신고</span>
+                <span class="btn-text" id="textSms"></span>
             </div>
         </button>
 
-        <!-- 2. 전화 연결 버튼 (흰 배경 + 빨강 전화기 SVG/글씨) -->
+        <!-- 2. 전화 연결 버튼 -->
         <a href="tel:02-6311-5382" class="btn btn-call" id="btnCall">
             <div class="btn-content">
-                <svg class="btn-icon" viewBox="0 0 24 24">
+                <svg class="btn-icon icon-call" viewBox="0 0 24 24">
                     <path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.2c.28-.27.36-.66.25-1.02C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/>
                 </svg>
-                <span class="btn-text" id="textCall">역무실<br>통화 연결</span>
+                <span class="btn-text" id="textCall"></span>
             </div>
         </a>
 
@@ -237,33 +243,34 @@
 
         const currentElevator = elevatorDatabase[currentId] || elevatorDatabase["1"];
 
+        // 4개 언어 데이터베이스 ((1577-1234) 줄바꿈 방지 코드 포함)
         const langData = {
             ko: {
                 title: "갇힘 신고",
                 locPrefix: "위치",
-                btnSms: "1577-1234\n문자 신고",
-                btnCall: "역무실\n통화 연결",
+                btnSms: "<span style='white-space: nowrap;'>1577-1234</span><br>문자 신고",
+                btnCall: "역무실<br>통화 연결",
                 getSmsBody: (loc) => `[승강기 갇힘 신고]\n- 위치: ${loc}\n승강기에 갇혔습니다. 신속한 구조 바랍니다.`
             },
             en: {
                 title: "Emergency Call",
                 locPrefix: "Location",
-                btnSms: "Send SMS\n(1577-1234)",
-                btnCall: "Call Station\nStaff",
+                btnSms: "Send SMS<br><span style='white-space: nowrap;'>(1577-1234)</span>",
+                btnCall: "Call Station<br>Staff",
                 getSmsBody: (loc) => `[Elevator Emergency]\n- Location: ${loc}\nI am stuck in the elevator. Please help.`
             },
             ja: {
                 title: "閉じ込め通報",
                 locPrefix: "位置",
-                btnSms: "SMSを送信\n(1577-1234)",
-                btnCall: "駅係員に\n電話する",
+                btnSms: "SMSを送信<br><span style='white-space: nowrap;'>(1577-1234)</span>",
+                btnCall: "駅係員に<br>電話する",
                 getSmsBody: (loc) => `[エレベーター閉じ込め]\n- 位置: ${loc}\nエレベーターに閉じ込められました。救助をお願いします。`
             },
             zh: {
                 title: "困人报警",
                 locPrefix: "位置",
-                btnSms: "发送报警短信\n(1577-1234)",
-                btnCall: "拨打\n值班室电话",
+                btnSms: "发送报警短信<br><span style='white-space: nowrap;'>(1577-1234)</span>",
+                btnCall: "拨打<br>值班室电话",
                 getSmsBody: (loc) => `[电梯困人报警]\n- 位置: ${loc}\n我被困在电梯里了，请速来救援。`
             }
         };
@@ -283,8 +290,9 @@
             document.getElementById('locLabel').innerText = langData[lang].locPrefix;
             document.getElementById('locValue').innerText = locText;
             
-            document.getElementById('textSms').innerHTML = langData[lang].btnSms.replace(/\n/g, '<br>');
-            document.getElementById('textCall').innerHTML = langData[lang].btnCall.replace(/\n/g, '<br>');
+            // 번역 텍스트를 HTML 코드로 변환하여 주입 (<br>과 <span> 태그 정상 작동)
+            document.getElementById('textSms').innerHTML = langData[lang].btnSms;
+            document.getElementById('textCall').innerHTML = langData[lang].btnCall;
             
             document.getElementById('btnCall').href = "tel:" + currentElevator.phone;
         }
