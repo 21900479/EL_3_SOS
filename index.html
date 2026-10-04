@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>갇힘 신고</title>
     <style>
-        /* 1. Noto Sans CJK (한국어, 일본어, 중국어) 웹 폰트 로드 */
+        /* Noto Sans CJK 웹 폰트 로드 */
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700;900&family=Noto+Sans+KR:wght@700;900&family=Noto+Sans+SC:wght@700;900&display=swap');
 
-        /* 2. 전역 폰트 적용 및 기본 배경 */
+        /* 기본 배경 */
         body {
             font-family: 'Noto Sans KR', 'Noto Sans JP', 'Noto Sans SC', sans-serif;
             background-color: #f0f2f5;
@@ -33,7 +33,7 @@
         .lang-selector {
             margin-bottom: 24px;
             text-align: center;
-            height: 40px; /* 선택창 영역 높이 고정 */
+            height: 40px; 
         }
         select {
             padding: 8px 16px;
@@ -47,55 +47,58 @@
             font-weight: 700;
         }
         
-        /* 타이틀: 높이를 고정하여 언어 변경 시 위아래로 흔들림 방지 */
+        /* 타이틀 */
         h1 { 
             color: #E53935; 
             font-size: 40px; 
             margin: 0 0 24px 0; 
             font-weight: 900;
             letter-spacing: -1px;
-            height: 58px; /* 절대 높이 고정 */
+            height: 58px; 
             display: flex;
             align-items: center;
             justify-content: center;
         }
         
-        /* 버튼 래퍼 및 공통 레이아웃 (min-height -> height 절대 고정) */
+        /* 공통 버튼 스타일 */
         .btn {
+            position: relative; /* 아이콘 절대 위치 배치를 위한 기준점 */
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: center; /* 내부 텍스트를 버튼 중앙에 배치 */
             width: 100%;
-            height: 140px; /* 절대 높이 고정 (변경 불가) */
+            height: 140px; 
             margin-bottom: 20px;
             border-radius: 20px;
             text-decoration: none;
             cursor: pointer;
             box-sizing: border-box;
             transition: transform 0.1s, box-shadow 0.1s;
-        }
-        .btn-content {
-            display: flex;
-            align-items: center;
-            gap: 20px; 
+            overflow: hidden;
         }
         
-        /* 버튼 내 텍스트 및 SVG 아이콘 */
+        /* 버튼 내 SVG 아이콘 (좌측 축에 완벽히 고정하여 정렬) */
+        .btn-icon {
+            position: absolute;
+            left: 36px; /* 좌측에서 동일한 간격으로 고정 */
+            top: 50%;
+            transform: translateY(-50%); /* 수직 중앙 정렬 */
+            width: 48px;
+            height: 48px;
+            fill: currentColor; 
+        }
+
+        /* 버튼 내 텍스트 (가운데 정렬) */
         .btn-text {
             font-size: 32px; 
             font-weight: 900;
             line-height: 1.3;
-            text-align: left;
+            text-align: center; /* 텍스트 자체를 중앙 정렬 */
             letter-spacing: -1px;
-        }
-        .btn-icon {
-            width: 48px;
-            height: 48px;
-            fill: currentColor; 
-            flex-shrink: 0;
+            width: 100%;
         }
 
-        /* 버튼 1: 문자 신고 (상단) - 빨강 바탕 + 흰색 */
+        /* 버튼 1: 문자 신고 (상단) - 빨강 바탕 + 흰색 아이콘/글씨 */
         .btn-sms { 
             background-color: #E53935; 
             color: #ffffff; 
@@ -108,7 +111,7 @@
             box-shadow: 0 4px 8px rgba(229, 57, 53, 0.35);
         }
 
-        /* 버튼 2: 통화 연결 (중간) - 흰 바탕 + 빨강 */
+        /* 버튼 2: 통화 연결 (중간) - 흰 바탕 + 빨강 테두리/아이콘/글씨 */
         .btn-call { 
             background-color: #ffffff; 
             color: #E53935; 
@@ -121,14 +124,14 @@
             box-shadow: 0 4px 8px rgba(229, 57, 53, 0.1);
         }
 
-        /* 승강기 위치 정보 박스 (min-height -> height 절대 고정) */
+        /* 승강기 위치 정보 박스 */
         .info-box {
             background-color: #f8f9fa;
             border-radius: 12px;
             margin-top: 12px;
             margin-bottom: 8px;
             border: 2px solid #cfd8dc; 
-            height: 140px; /* 절대 높이 고정 (변경 불가) */
+            height: 140px; 
             padding: 16px 20px;
             display: flex;
             flex-direction: column;
@@ -171,24 +174,20 @@
         <!-- 타이틀 (갇힘 신고) -->
         <h1 id="pageTitle">갇힘 신고</h1>
         
-        <!-- 1. 문자 신고 버튼 (빨강 배경 + 흰색 SVG/글씨) -->
+        <!-- 1. 문자 신고 버튼 (빨강 배경 + 흰색 말풍선 SVG/글씨) -->
         <button class="btn btn-sms" id="btnSms" onclick="sendSMS()">
-            <div class="btn-content">
-                <svg class="btn-icon" viewBox="0 0 24 24">
-                    <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
-                </svg>
-                <span class="btn-text" id="textSms">1577-1234<br>문자 신고</span>
-            </div>
+            <svg class="btn-icon" viewBox="0 0 24 24">
+                <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
+            </svg>
+            <span class="btn-text" id="textSms">1577-1234<br>문자 신고</span>
         </button>
 
-        <!-- 2. 전화 연결 버튼 (흰 배경 + 빨강 SVG/글씨) -->
+        <!-- 2. 전화 연결 버튼 (흰 배경 + 빨강 전화기 SVG/글씨) -->
         <a href="tel:02-6311-5382" class="btn btn-call" id="btnCall">
-            <div class="btn-content">
-                <svg class="btn-icon" viewBox="0 0 24 24">
-                    <path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.2c.28-.27.36-.66.25-1.02C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/>
-                </svg>
-                <span class="btn-text" id="textCall">역무실<br>통화 연결</span>
-            </div>
+            <svg class="btn-icon" viewBox="0 0 24 24">
+                <path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.2c.28-.27.36-.66.25-1.02C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/>
+            </svg>
+            <span class="btn-text" id="textCall">역무실<br>통화 연결</span>
         </a>
 
         <!-- 3. 엘리베이터 위치 정보 박스 -->
