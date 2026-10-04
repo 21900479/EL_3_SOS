@@ -62,10 +62,9 @@
         
         /* 공통 버튼 스타일 */
         .btn {
-            position: relative; /* 아이콘 절대 위치 배치를 위한 기준점 */
             display: flex;
             align-items: center;
-            justify-content: center; /* 내부 텍스트를 버튼 중앙에 배치 */
+            justify-content: center; /* 전체 콘텐츠 그룹을 버튼 중앙에 배치 */
             width: 100%;
             height: 140px; 
             margin-bottom: 20px;
@@ -74,42 +73,32 @@
             cursor: pointer;
             box-sizing: border-box;
             transition: transform 0.1s, box-shadow 0.1s;
-            overflow: hidden;
         }
         
-        /* 아이콘과 텍스트 래퍼 */
+        /* [핵심] 아이콘과 텍스트를 묶어주는 Grid 래퍼 (수직 정렬 및 우측 이동 완벽 통제) */
         .btn-content {
-            display: flex;
+            display: grid;
+            grid-template-columns: 48px 1fr; /* 좌측 아이콘 48px 고정, 우측 텍스트 나머지 영역 */
             align-items: center;
-            justify-content: center;
-            width: 100%;
+            width: 260px; /* 고정 너비로 상하단 버튼의 아이콘 수직선 100% 일치 */
+            gap: 20px; /* 아이콘과 텍스트 사이의 최적 간격 */
+            padding-left: 16px; /* 전체 덩어리를 우측으로 살짝 밀어 시각적 균형감 확보 */
         }
         
-        /* 버튼 내 SVG 아이콘 (좌측 축에 고정) */
+        /* 버튼 내 SVG 아이콘 */
         .btn-icon {
-            position: absolute;
-            left: 36px; /* 기준 좌측 여백 */
-            top: 50%;
-            transform: translateY(-50%);
-            width: 48px;
-            height: 48px;
+            width: 100%; /* Grid 칸인 48px에 꽉 차게 맞춤 */
+            height: auto;
             fill: currentColor; 
         }
-        
-        /* [핵심] 전화기 아이콘 수직 정렬 교정: 
-           말풍선과 전화기의 자체 여백 차이를 픽셀 단위로 보정하여 완벽한 수직 일렬 정렬 */
-        .icon-call {
-            left: 32px; 
-        }
 
-        /* 버튼 내 텍스트 (가운데 정렬) */
+        /* 버튼 내 텍스트 */
         .btn-text {
             font-size: 32px; 
             font-weight: 900;
             line-height: 1.3;
-            text-align: center;
+            text-align: left; /* 텍스트는 좌측 정렬하여 아이콘과 나란히 시작 */
             letter-spacing: -1px;
-            width: 100%;
         }
 
         /* 버튼 1: 문자 신고 (상단) - 빨강 바탕 + 흰색 아이콘/글씨 */
@@ -201,8 +190,7 @@
         <!-- 2. 전화 연결 버튼 (흰 배경 + 빨강 전화기 SVG/글씨) -->
         <a href="tel:02-6311-5382" class="btn btn-call" id="btnCall">
             <div class="btn-content">
-                <!-- icon-call 클래스 추가로 수직 정렬 교정 -->
-                <svg class="btn-icon icon-call" viewBox="0 0 24 24">
+                <svg class="btn-icon" viewBox="0 0 24 24">
                     <path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.2c.28-.27.36-.66.25-1.02C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/>
                 </svg>
                 <span class="btn-text" id="textCall">역무실<br>통화 연결</span>
@@ -269,14 +257,14 @@
                 locPrefix: "位置",
                 btnSms: "SMSを送信\n(1577-1234)",
                 btnCall: "駅係員に\n電話する",
-                getSmsBody: (loc) => `[エレベーター閉じ込め]\n- 위치: ${loc}\nエレベーターに閉じ込められました。救助をお願いします。`
+                getSmsBody: (loc) => `[エレベーター閉じ込め]\n- 位置: ${loc}\nエレベーターに閉じ込められました。救助をお願いします。`
             },
             zh: {
                 title: "困人报警",
                 locPrefix: "位置",
                 btnSms: "发送报警短信\n(1577-1234)",
                 btnCall: "拨打\n值班室电话",
-                getSmsBody: (loc) => `[电梯困人报警]\n- 위치: ${loc}\n我被困在电梯里了，请速来救援。`
+                getSmsBody: (loc) => `[电梯困人报警]\n- 位置: ${loc}\n我被困在电梯里了，请速来救援。`
             }
         };
 
