@@ -1,1090 +1,249 @@
 <!DOCTYPE html>
-<html lang="ko" data-lang="ko">
-
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width,
-                   initial-scale=1.0,
-                   maximum-scale=1.0,
-                   user-scalable=no,
-                   viewport-fit=cover">
-
-    <meta name="theme-color" content="#1E1E1E">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>비상 연락처</title>
-
-
-    <!-- =========================================================
-         Noto Sans
-    ========================================================== -->
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
-          rel="stylesheet">
-
-
     <style>
-
-        /* =========================================================
-           기본
-        ========================================================== */
-
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-
-        html {
-            background-color: #1E1E1E;
-        }
-
-
         body {
-
+            font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
             margin: 0;
-
-            padding:
-                max(16px, env(safe-area-inset-top))
-                max(16px, env(safe-area-inset-right))
-                max(16px, env(safe-area-inset-bottom))
-                max(16px, env(safe-area-inset-left));
-
-            min-height: 100svh;
-
-            background-color: #1E1E1E;
-
-            color: #FFFFFF;
-
-            text-align: center;
-
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-
-            font-family: "Noto Sans KR", sans-serif;
         }
-
-
-        /* =========================================================
-           언어별 폰트
-        ========================================================== */
-
-        html[data-lang="ko"] body {
-            font-family: "Noto Sans KR", sans-serif;
-        }
-
-        html[data-lang="en"] body {
-            font-family: "Noto Sans", sans-serif;
-        }
-
-        html[data-lang="ja"] body {
-            font-family: "Noto Sans JP", sans-serif;
-        }
-
-        html[data-lang="zh"] body {
-            font-family: "Noto Sans SC", sans-serif;
-        }
-
-
-        /* =========================================================
-           메인 컨테이너
-        ========================================================== */
-
         .container {
-
-            width: 100%;
-
-            max-width: 430px;
-
+            max-width: 400px;
             margin: 0 auto;
-
-            padding:
-                22px
-                20px
-                calc(22px + env(safe-area-inset-bottom));
-
-            background-color: #2A2A2A;
-
-            border-radius: 16px;
-
-            box-shadow:
-                0 6px 18px rgba(0, 0, 0, 0.45);
+            background: #2a2a2a;
+            padding: 30px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
-
-
-        /* =========================================================
-           언어 선택
-        ========================================================== */
-
+        
+        /* 다국어 선택창 */
         .lang-selector {
-
-            margin-bottom: 15px;
-
+            margin-bottom: 20px;
             text-align: center;
         }
-
-
         select {
-
-            min-width: 160px;
-
-            padding: 9px 36px 9px 15px;
-
-            font-family: inherit;
-
-            font-size: 17px;
-
-            font-weight: 500;
-
-            color: #FFFFFF;
-
-            background-color: #444444;
-
-            border: 1px solid #666666;
-
-            border-radius: 8px;
-
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            background-color: #444;
+            color: white;
+            border: 1px solid #666;
             text-align: center;
-
-            cursor: pointer;
-
-            appearance: auto;
         }
-
-
-        /* =========================================================
-           포커스 표시
-        ========================================================== */
-
-        select:focus-visible,
-        .btn:focus-visible {
-
-            outline: 4px solid #FFD740;
-
-            outline-offset: 3px;
-        }
-
-
-        /* =========================================================
-           제목
-        ========================================================== */
-
-        h1 {
-
-            margin:
-                7px 0
-                24px 0;
-
-            color: #FF5252;
-
-            font-size: clamp(38px, 11vw, 44px);
-
-            font-weight: 800;
-
-            line-height: 1.15;
-
+        
+        /* 1. 비상 연락처 타이틀 (비율 2.0 = 48px) */
+        h1 { 
+            color: #ff5252; 
+            font-size: 48px; 
+            margin: 10px 0 25px 0; 
             word-break: keep-all;
-
-            overflow-wrap: normal;
         }
-
-
-        /* =========================================================
-           정보 박스
-        ========================================================== */
-
+        
+        /* 2. 승강기 위치 정보 박스 (비율 1.0 = 24px) */
         .info-box {
-
-            margin-bottom: 22px;
-
-            padding: 17px 16px;
-
-            background-color: #333333;
-
-            border: 1px solid #484848;
-
-            border-radius: 10px;
-
-            text-align: center;
-
-            box-shadow:
-                inset 0 1px 0 rgba(255,255,255,0.02);
+            background-color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            text-align: center; 
+            border: 1px solid #444; 
         }
-
-
-        .info-box p {
-
-            margin: 13px 0;
-
-            line-height: 1.45;
-        }
-
-
-        .info-box p:first-child {
-            margin-top: 3px;
-        }
-
-
-        .info-box p:last-child {
-            margin-bottom: 3px;
-        }
-
-
-        /* =========================================================
-           정보 라벨
-        ========================================================== */
-
-        .label {
-
-            display: inline-block;
-
-            margin-bottom: 3px;
-
-            color: #B8C3C9;
-
-            font-size: 22px;
-
-            font-weight: 500;
-
-            line-height: 1.4;
-
-            word-break: keep-all;
-        }
-
-
-        /* =========================================================
-           정보 값
-        ========================================================== */
-
-        .value {
-
-            display: inline-block;
-
-            color: #FFFFFF;
-
-            font-size: 24px;
-
-            font-weight: 800;
-
-            line-height: 1.35;
-
-            word-break: keep-all;
-
-            overflow-wrap: normal;
-        }
-
-
-        /* =========================================================
-           버튼 공통
-        ========================================================== */
-
+        .info-box p { margin: 10px 0; line-height: 1.6; }
+        .label { font-size: 24px; color: #b0bec5; font-weight: normal; }
+        .value { font-size: 24px; color: #ffffff; font-weight: bold; }
+        
+        /* 3. 버튼 텍스트 (비율 1.5 = 36px) */
         .btn {
-
             display: flex;
-
             align-items: center;
             justify-content: center;
-
             width: 100%;
-
-            min-height: 132px;
-
-            margin-bottom: 17px;
-
-            padding: 15px 14px;
-
-            border: none;
-
-            border-radius: 16px;
-
-            color: #FFFFFF;
-
-            font-family: inherit;
-
-            font-size: 34px;
-
-            font-weight: 800;
-
-            line-height: 1.25;
-
-            text-align: center;
-
+            min-height: 140px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            font-size: 36px;
+            font-weight: 900;
             text-decoration: none;
-
-            white-space: pre-line;
-
-            word-break: keep-all;
-
-            overflow-wrap: normal;
-
+            color: white;
+            border: none;
             cursor: pointer;
-
-            box-shadow:
-                0 6px 12px rgba(0,0,0,0.35);
-
-            transition:
-                transform 0.08s ease,
-                filter 0.08s ease;
-
-            touch-action: manipulation;
-
-            -webkit-user-select: none;
-            user-select: none;
-        }
-
-
-        .btn:last-child {
-            margin-bottom: 0;
-        }
-
-
-        /* =========================================================
-           버튼 내부
-        ========================================================== */
-
-        .btn-content {
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            gap: 14px;
-
-            width: 100%;
-        }
-
-
-        .btn-icon {
-
-            width: 42px;
-
-            height: 42px;
-
-            flex: 0 0 42px;
-
-            fill: none;
-
-            stroke: currentColor;
-
-            stroke-width: 2.4;
-
-            stroke-linecap: round;
-
-            stroke-linejoin: round;
-        }
-
-
-        .btn-text {
-
-            display: block;
-
-            text-align: center;
-
-            white-space: pre-line;
-
+            box-sizing: border-box;
             word-break: keep-all;
+            line-height: 1.3;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+            transition: transform 0.1s;
+            text-align: center;
         }
-
-
-        /* =========================================================
-           전화 버튼
-        ========================================================== */
-
-        .btn-call {
-
-            background-color: #16823B;
-        }
-
-
-        .btn-call:active {
-
-            background-color: #126E32;
-
-            transform: scale(0.98);
-
-            filter: brightness(0.95);
-        }
-
-
-        /* =========================================================
-           문자 버튼
-        ========================================================== */
-
-        .btn-sms {
-
-            background-color: #0877C9;
-        }
-
-
-        .btn-sms:active {
-
-            background-color: #0767AD;
-
-            transform: scale(0.98);
-
-            filter: brightness(0.95);
-        }
-
-
-        /* =========================================================
-           일본어
-        ========================================================== */
-
-        html[data-lang="ja"] h1 {
-
-            line-height: 1.25;
-        }
-
-
-        html[data-lang="ja"] .label {
-
-            font-size: 21px;
-        }
-
-
-        html[data-lang="ja"] .btn {
-
-            line-height: 1.35;
-        }
-
-
-        /* =========================================================
-           중국어
-        ========================================================== */
-
-        html[data-lang="zh"] h1 {
-
-            line-height: 1.25;
-        }
-
-
-        html[data-lang="zh"] .label {
-
-            font-size: 21px;
-        }
-
-
-        html[data-lang="zh"] .btn {
-
-            line-height: 1.35;
-        }
-
-
-        /* =========================================================
-           작은 스마트폰
-        ========================================================== */
-
-        @media (max-width: 360px) {
-
-            body {
-
-                padding:
-                    max(12px, env(safe-area-inset-top))
-                    max(12px, env(safe-area-inset-right))
-                    max(12px, env(safe-area-inset-bottom))
-                    max(12px, env(safe-area-inset-left));
-            }
-
-
-            .container {
-
-                padding:
-                    19px
-                    14px
-                    calc(19px + env(safe-area-inset-bottom));
-
-                border-radius: 14px;
-            }
-
-
-            h1 {
-
-                font-size: 36px;
-
-                margin-bottom: 20px;
-            }
-
-
-            .label {
-
-                font-size: 20px;
-            }
-
-
-            .value {
-
-                font-size: 22px;
-            }
-
-
-            .btn {
-
-                min-height: 120px;
-
-                font-size: 30px;
-
-                border-radius: 14px;
-            }
-
-
-            .btn-icon {
-
-                width: 36px;
-
-                height: 36px;
-
-                flex-basis: 36px;
-            }
-
-
-            .btn-content {
-
-                gap: 11px;
-            }
-        }
-
-
-        /* =========================================================
-           아주 작은 화면
-        ========================================================== */
-
-        @media (max-width: 320px) {
-
-            h1 {
-
-                font-size: 33px;
-            }
-
-
-            .btn {
-
-                min-height: 112px;
-
-                font-size: 27px;
-            }
-
-
-            .value {
-
-                font-size: 20px;
-            }
-
-
-            .btn-icon {
-
-                width: 32px;
-
-                height: 32px;
-
-                flex-basis: 32px;
-            }
-        }
-
+        
+        /* 버튼 순서: 문자 신고(위, 파랑), 역무실 통화(아래, 녹색) */
+        .btn-sms { background-color: #2196F3; } 
+        .btn-sms:active { background-color: #1e88e5; transform: scale(0.98); }
+
+        .btn-call { background-color: #4CAF50; } 
+        .btn-call:active { background-color: #45a049; transform: scale(0.98); } 
     </style>
-
 </head>
-
-
 <body>
 
-
     <div class="container">
-
-
-        <!-- =====================================================
-             언어 선택
-        ====================================================== -->
-
+        <!-- 4개 국어 선택 -->
         <div class="lang-selector">
-
-            <select
-                id="langSelect"
-                aria-label="언어 선택"
-                onchange="changeLanguage()">
-
+            <select id="langSelect" onchange="changeLanguage()">
                 <option value="ko">한국어</option>
-
                 <option value="en">English</option>
-
                 <option value="ja">日本語</option>
-
                 <option value="zh">中文</option>
-
             </select>
-
         </div>
 
-
-        <!-- =====================================================
-             제목
-        ====================================================== -->
-
-        <h1 id="pageTitle">
-            비상 연락처
-        </h1>
-
-
-        <!-- =====================================================
-             위치 / 승강기 번호
-        ====================================================== -->
-
+        <h1 id="pageTitle">비상 연락처</h1>
+        
+        <!-- 엘리베이터 위치 정보 (승강기번호 삭제 완료) -->
         <div class="info-box">
-
-
             <p>
-
-                <span
-                    id="locLabel"
-                    class="label">
-                    위치
-                </span>
-
-                <br>
-
-                <span
-                    id="locValue"
-                    class="value">
-                    신금호역 엘리베이터 3호기
-                </span>
-
+                <span id="locLabel" class="label">위치</span><br>
+                <span id="locValue" class="value">신금호역 엘리베이터 3호기</span>
             </p>
-
-
-            <p>
-
-                <span
-                    id="numLabel"
-                    class="label">
-                    승강기번호
-                </span>
-
-                <br>
-
-                <span
-                    id="numValue"
-                    class="value">
-                    0102-619
-                </span>
-
-            </p>
-
-
         </div>
 
-
-        <!-- =====================================================
-             역무실 전화 버튼
-        ====================================================== -->
-
-        <a
-            href="tel:02-6311-5382"
-            class="btn btn-call"
-            id="btnCall">
-
-            <span class="btn-content">
-
-                <!-- 전화기 SVG -->
-
-                <svg
-                    class="btn-icon"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true">
-
-                    <path
-                        d="M22 16.92v3a2 2 0 0 1-2.18 2
-                           19.79 19.79 0 0 1-8.63-3.07
-                           19.5 19.5 0 0 1-6-6
-                           19.79 19.79 0 0 1-3.07-8.67
-                           A2 2 0 0 1 4.11 2h3
-                           a2 2 0 0 1 2 1.72
-                           12.84 12.84 0 0 0 .7 2.81
-                           2 2 0 0 1-.45 2.11L8.09 9.91
-                           a16 16 0 0 0 6 6l1.27-1.27
-                           a2 2 0 0 1 2.11-.45
-                           12.84 12.84 0 0 0 2.81.7
-                           A2 2 0 0 1 22 16.92z">
-                    </path>
-
-                </svg>
-
-
-                <span class="btn-text">
-                    역무실
-                    통화 연결
-                </span>
-
-            </span>
-
-        </a>
-
-
-        <!-- =====================================================
-             문자 신고 버튼
-
-             ※ 화면 언어와 관계없이
-                실제 SMS 본문은 항상 한국어
-        ====================================================== -->
-
-        <button
-            type="button"
-            class="btn btn-sms"
-            id="btnSms"
-            onclick="sendSMS()">
-
-            <span class="btn-content">
-
-                <!-- 문자 SVG -->
-
-                <svg
-                    class="btn-icon"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true">
-
-                    <path
-                        d="M21 11.5a8.38 8.38 0 0 1-.9 3.8
-                           8.5 8.5 0 0 1-7.6 4.7
-                           8.38 8.38 0 0 1-3.8-.9
-                           L3 21l1.9-5.7
-                           A8.38 8.38 0 0 1 4 11.5
-                           8.5 8.5 0 1 1 21 11.5z">
-                    </path>
-
-                    <path d="M8 11h8"></path>
-                    <path d="M8 8h5"></path>
-                    <path d="M8 14h4"></path>
-
-                </svg>
-
-
-                <span class="btn-text">
-                    1577-1234
-                    문자 신고
-                </span>
-
-            </span>
-
+        <!-- 1. 문자 신고 버튼 (상단 배치) -->
+        <button class="btn btn-sms" id="btnSms" onclick="sendSMS()">
+            1577-1234<br>문자 신고
         </button>
 
-
+        <!-- 2. 전화 연결 버튼 (하단 배치, 동적 전화번호 바인딩) -->
+        <a href="tel:02-6311-5382" class="btn btn-call" id="btnCall">
+            역무실<br>통화 연결
+        </a>
     </div>
 
-
     <script>
-
-
-        /* =========================================================
-           승강기 정보
-
-           역명 표기 기준
-
-           한국어 : 신금호역
-           영어   : Singeumho Station
-           일본어 : シングムホ駅
-           중국어 : 新金湖站
-        ========================================================== */
-
-        const elevatorInfo = {
-
-            number: "0102-619",
-
-            location: {
-
-                ko: "신금호역 엘리베이터 3호기",
-
-                en: "Elevator No. 3, Singeumho Station",
-
-                ja: "シングムホ駅 エレベーター3号機",
-
-                zh: "新金湖站3号电梯"
-
+        // 70여 개 엘리베이터 데이터베이스 (엑셀 내용이 이곳으로 들어옵니다)
+        const elevatorDatabase = {
+            "1": {
+                locationKo: "신금호역 엘리베이터 3호기",
+                locationEn: "Singumho Station Elevator No.3",
+                locationJa: "新金湖駅 エレベーター3号機",
+                locationZh: "新金湖站 3号电梯",
+                phone: "02-6311-5382"
+            },
+            "2": {
+                locationKo: "신금호역 엘리베이터 4호기",
+                locationEn: "Singumho Station Elevator No.4",
+                locationJa: "新金湖駅 エレベーター4号機",
+                locationZh: "新金湖站 4号电梯",
+                phone: "02-6311-5382"
+            },
+            "3": {
+                locationKo: "청구역 엘리베이터 1호기",
+                locationEn: "Cheonggu Station Elevator No.1",
+                locationJa: "青丘駅 エレベーター1号機",
+                locationZh: "青丘站 1号电梯",
+                phone: "02-6311-5371"
             }
-
+            // 향후 엑셀의 70개 데이터를 아래로 계속 추가할 수 있습니다.
         };
 
+        // URL 파라미터(?id=1 등) 추출
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentId = urlParams.get('id') || "1"; // 파라미터가 없으면 기본 1번
 
-        /* =========================================================
-           화면용 다국어 데이터
+        // 해당 승강기 정보 불러오기 (없으면 신금호역 3호기 기본값)
+        const currentElevator = elevatorDatabase[currentId] || {
+            locationKo: "신금호역 엘리베이터 3호기",
+            locationEn: "Singumho Station Elevator No.3",
+            locationJa: "新金湖駅 エレベーター3号機",
+            locationZh: "新金湖站 3号电梯",
+            phone: "02-6311-5382"
+        };
 
-           SMS 내용은 이곳에 넣지 않음.
-        ========================================================== */
-
+        // 4개 언어 텍스트 정의
         const langData = {
-
-
-            /* -----------------------------------------------------
-               한국어
-            ----------------------------------------------------- */
-
             ko: {
-
                 title: "비상 연락처",
-
                 locPrefix: "위치",
-
-                numPrefix: "승강기번호",
-
-                btnCall:
-                    "역무실\n통화 연결",
-
-                btnSms:
-                    "1577-1234\n문자 신고"
-
+                btnSms: "1577-1234\n문자 신고",
+                btnCall: "역무실\n통화 연결",
+                getSmsBody: (loc) => `[승강기 갇힘 신고]\n- 위치: ${loc}\n승강기에 갇혔습니다. 신속한 구조 바랍니다.`
             },
-
-
-            /* -----------------------------------------------------
-               English
-            ----------------------------------------------------- */
-
             en: {
-
                 title: "Emergency Contacts",
-
                 locPrefix: "Location",
-
-                numPrefix: "Elevator No.",
-
-                btnCall:
-                    "Call Station\nStaff",
-
-                btnSms:
-                    "Send SMS\n(1577-1234)"
-
+                btnSms: "Send SMS\n(1577-1234)",
+                btnCall: "Call Station\nStaff",
+                getSmsBody: (loc) => `[Elevator Emergency]\n- Location: ${loc}\nI am stuck in the elevator. Please help.`
             },
-
-
-            /* -----------------------------------------------------
-               日本語
-            ----------------------------------------------------- */
-
             ja: {
-
                 title: "緊急連絡先",
-
                 locPrefix: "位置",
-
-                numPrefix: "エレベーター番号",
-
-                btnCall:
-                    "駅係員に\n電話する",
-
-                btnSms:
-                    "SMSを送信\n(1577-1234)"
-
+                btnSms: "SMSを送信\n(1577-1234)",
+                btnCall: "駅係員に\n電話する",
+                getSmsBody: (loc) => `[エレベーター閉じ込め]\n- 位置: ${loc}\nエレベーターに閉じ込められました。救助をお願いします。`
             },
-
-
-            /* -----------------------------------------------------
-               中文
-            ----------------------------------------------------- */
-
             zh: {
-
                 title: "紧急联系方式",
-
                 locPrefix: "位置",
-
-                numPrefix: "电梯编号",
-
-                btnCall:
-                    "拨打\n车站值班电话",
-
-                btnSms:
-                    "发送短信求助\n(1577-1234)"
-
+                btnSms: "发送报警短信\n(1577-1234)",
+                btnCall: "拨打\n值班室电话",
+                getSmsBody: (loc) => `[电梯困人报警]\n- 位置: ${loc}\n我被困在电梯里了，请速来救援。`
             }
-
         };
 
-
-        /* =========================================================
-           언어 변경
-        ========================================================== */
-
-        function changeLanguage() {
-
-
-            const lang =
-                document.getElementById("langSelect").value;
-
-
-            /* -----------------------------------------------------
-               HTML 언어 설정
-            ----------------------------------------------------- */
-
-            let htmlLang = lang;
-
-            if (lang === "zh") {
-
-                htmlLang = "zh-CN";
-
-            }
-
-            document.documentElement.lang = htmlLang;
-
-
-            /* -----------------------------------------------------
-               CSS 폰트 언어 설정
-            ----------------------------------------------------- */
-
-            document.documentElement.dataset.lang = lang;
-
-
-            /* -----------------------------------------------------
-               제목
-            ----------------------------------------------------- */
-
-            document.getElementById("pageTitle").textContent =
-                langData[lang].title;
-
-
-            /* -----------------------------------------------------
-               위치
-            ----------------------------------------------------- */
-
-            document.getElementById("locLabel").textContent =
-                langData[lang].locPrefix;
-
-
-            document.getElementById("locValue").textContent =
-                elevatorInfo.location[lang];
-
-
-            /* -----------------------------------------------------
-               승강기 번호
-            ----------------------------------------------------- */
-
-            document.getElementById("numLabel").textContent =
-                langData[lang].numPrefix;
-
-
-            document.getElementById("numValue").textContent =
-                elevatorInfo.number;
-
-
-            /* -----------------------------------------------------
-               전화 버튼
-            ----------------------------------------------------- */
-
-            document.querySelector("#btnCall .btn-text").textContent =
-                langData[lang].btnCall;
-
-
-            /* -----------------------------------------------------
-               문자 버튼
-            ----------------------------------------------------- */
-
-            document.querySelector("#btnSms .btn-text").textContent =
-                langData[lang].btnSms;
-
+        // 현재 언어별 위치명 가져오기
+        function getCurrentLocation(lang) {
+            if (lang === 'en') return currentElevator.locationEn || currentElevator.locationKo;
+            if (lang === 'ja') return currentElevator.locationJa || currentElevator.locationKo;
+            if (lang === 'zh') return currentElevator.locationZh || currentElevator.locationKo;
+            return currentElevator.locationKo;
         }
 
+        // 언어 변경 함수
+        function changeLanguage() {
+            const lang = document.getElementById('langSelect').value;
+            const locText = getCurrentLocation(lang);
+            
+            document.getElementById('pageTitle').innerText = langData[lang].title;
+            document.getElementById('locLabel').innerText = langData[lang].locPrefix;
+            document.getElementById('locValue').innerText = locText;
+            
+            document.getElementById('btnSms').innerHTML = langData[lang].btnSms.replace(/\n/g, '<br>');
+            document.getElementById('btnCall').innerHTML = langData[lang].btnCall.replace(/\n/g, '<br>');
+            
+            // 해당 역 전화번호로 통화 연결 링크 동적 갱신
+            document.getElementById('btnCall').href = "tel:" + currentElevator.phone;
+        }
 
-        /* =========================================================
-           SMS 신고
-
-           ★ 모든 언어에서 한국어로 신고 ★
-
-           수신번호:
-           1577-1234
-        ========================================================== */
-
+        // 1577-1234 문자 전송 함수 (승강기번호 삭제 및 위치만 전송)
         function sendSMS() {
-
-
-            /* -----------------------------------------------------
-               SMS 내용은 항상 한국어
-            ----------------------------------------------------- */
-
-            const message =
-`[승강기 갇힘 신고]
-- 위치: ${elevatorInfo.location.ko}
-- 승강기번호: ${elevatorInfo.number}
-승강기에 갇혔습니다. 신속한 구조 바랍니다.`;
-
-
-            /* -----------------------------------------------------
-               서울교통공사 문자 접수번호
-
-               +82 사용하지 않음
-            ----------------------------------------------------- */
-
+            const lang = document.getElementById('langSelect').value;
+            const locText = getCurrentLocation(lang);
+            const message = langData[lang].getSmsBody(locText);
             const targetNumber = "15771234";
-
-
-            /* -----------------------------------------------------
-               사용자 기기 확인
-            ----------------------------------------------------- */
-
-            const userAgent =
-                navigator.userAgent ||
-                navigator.vendor ||
-                window.opera;
-
-
+            
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
             let smsUrl = "";
 
-
-            /* -----------------------------------------------------
-               iPhone / iPad
-            ----------------------------------------------------- */
-
-            if (
-                /iPad|iPhone|iPod/.test(userAgent) &&
-                !window.MSStream
-            ) {
-
-                smsUrl =
-                    `sms:${targetNumber}&body=${encodeURIComponent(message)}`;
-
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                // iOS 규격
+                smsUrl = `sms:${targetNumber}&body=${encodeURIComponent(message)}`;
+            } else {
+                // Android 규격
+                smsUrl = `sms:${targetNumber}?body=${encodeURIComponent(message)}`;
             }
-
-
-            /* -----------------------------------------------------
-               Android / 기타
-            ----------------------------------------------------- */
-
-            else {
-
-                smsUrl =
-                    `sms:${targetNumber}?body=${encodeURIComponent(message)}`;
-
-            }
-
-
-            /* -----------------------------------------------------
-               문자 앱 실행
-            ----------------------------------------------------- */
-
+            
             window.location.href = smsUrl;
-
         }
 
-
-        /* =========================================================
-           페이지 최초 실행
-        ========================================================== */
-
-        window.addEventListener(
-            "DOMContentLoaded",
-            function() {
-
-                changeLanguage();
-
-            }
-        );
-
-
+        // 초기 화면 로드
+        window.onload = function() {
+            changeLanguage();
+        };
     </script>
-
-
 </body>
-
 </html>
