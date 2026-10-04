@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>갇힘 신고</title>
     <style>
-        /* 1. 라이트 모드 배경 설정 */
+        /* 라이트 모드 기본 배경 */
         body {
             font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
-            background-color: #f7f9fa; /* 연한 회색 배경 */
+            background-color: #f7f9fa;
             color: #231f20; /* CI Black (R35 G31 B32) */
             text-align: center;
             padding: 20px;
@@ -17,14 +17,14 @@
         .container {
             max-width: 400px;
             margin: 0 auto;
-            background: #ffffff; /* 컨테이너는 완전한 흰색 */
+            background: #ffffff;
             padding: 30px 20px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* 부드러운 그림자 */
-            border: 1px solid #e0e0e0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            border: 1px solid #e2e5e8;
         }
         
-        /* 다국어 선택창 (라이트 모드 스타일에 맞게 변경) */
+        /* 다국어 선택창 */
         .lang-selector {
             margin-bottom: 20px;
             text-align: center;
@@ -35,12 +35,12 @@
             border-radius: 5px;
             background-color: #ffffff;
             color: #231f20;
-            border: 1px solid #666c71; /* CI SM Gray (R102 G108 B113) */
+            border: 1px solid #666c71; /* CI SM Gray */
             text-align: center;
             font-weight: bold;
         }
         
-        /* 2. 타이틀 (비율 2.0 = 48px) - CI SM Blue 적용 */
+        /* 1. 타이틀 (비율 2.0 = 48px) - CI SM Blue */
         h1 { 
             color: #293896; /* CI SM Blue (R41 G56 B150) */
             font-size: 48px; 
@@ -50,20 +50,7 @@
             letter-spacing: -1.5px;
         }
         
-        /* 3. 승강기 위치 정보 박스 (비율 1.0 = 24px) */
-        .info-box {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            text-align: center; 
-            border: 2px solid #666c71; /* CI SM Gray (R102 G108 B113) */
-        }
-        .info-box p { margin: 10px 0; line-height: 1.6; }
-        .label { font-size: 24px; color: #666c71; font-weight: bold; } /* CI SM Gray */
-        .value { font-size: 24px; color: #231f20; font-weight: 900; } /* CI Black */
-        
-        /* 4. 공통 버튼 스타일 (비율 1.5 = 36px) - 둥근 직사각형(Apple 스타일) */
+        /* 2. 공통 버튼 스타일 (비율 1.5 = 36px) - 상단 배치 */
         .btn {
             display: flex;
             align-items: center;
@@ -71,10 +58,12 @@
             width: 100%;
             min-height: 140px;
             margin-bottom: 20px;
-            border-radius: 20px; /* 둥글게 */
+            border-radius: 20px;
             font-size: 36px;
             font-weight: 900;
             text-decoration: none;
+            color: #ffffff;
+            border: none;
             cursor: pointer;
             box-sizing: border-box;
             word-break: keep-all;
@@ -84,31 +73,41 @@
             letter-spacing: -1px;
         }
         
-        /* 5. 문자 신고 버튼 (위, 흰색 배경 + 검은 글씨 + 테두리) - BUTTON 이미지 참고 */
+        /* 버튼 1: 문자 신고 (상단) - CI SM Blue 활용 */
         .btn-sms { 
-            background-color: #ffffff; 
-            color: #000000;
-            border: 3px solid #d1d1d6; /* 연한 회색 테두리 */
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            background-color: #293896; /* CI SM Blue */
+            box-shadow: 0 6px 15px rgba(41, 56, 150, 0.3);
         } 
         .btn-sms:active { 
-            background-color: #f0f0f5; 
+            background-color: #1e2a73; 
             transform: scale(0.98); 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            box-shadow: 0 3px 8px rgba(41, 56, 150, 0.3);
         }
 
-        /* 6. 전화 연결 버튼 (아래, 주황/빨강 배경 + 흰 글씨) - BUTTON 이미지 참고 */
+        /* 버튼 2: 통화 연결 (중간) - CI SM Gold 활용 */
         .btn-call { 
-            background-color: #ff3b30; /* 눈에 띄는 SOS 레드/오렌지 */
-            color: #ffffff;
-            border: none;
-            box-shadow: 0 6px 15px rgba(255, 59, 48, 0.4);
+            background-color: #c59b27; /* CI SM Gold */
+            box-shadow: 0 6px 15px rgba(197, 155, 39, 0.35);
         } 
         .btn-call:active { 
-            background-color: #d73229; 
+            background-color: #a47f1c; 
             transform: scale(0.98); 
-            box-shadow: 0 3px 8px rgba(255, 59, 48, 0.4);
-        } 
+            box-shadow: 0 3px 8px rgba(197, 155, 39, 0.35);
+        }
+
+        /* 3. 승강기 위치 정보 박스 (비율 1.0 = 24px) - 하단으로 이동 */
+        .info-box {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            text-align: center; 
+            border: 2px solid #666c71; /* CI SM Gray */
+        }
+        .info-box p { margin: 10px 0; line-height: 1.6; }
+        .label { font-size: 24px; color: #666c71; font-weight: bold; } /* CI SM Gray */
+        .value { font-size: 24px; color: #231f20; font-weight: 900; } /* CI Black */
     </style>
 </head>
 <body>
@@ -124,68 +123,62 @@
             </select>
         </div>
 
-        <!-- 타이틀 변경 (갇힘 신고) -->
+        <!-- 타이틀 (갇힘 신고) -->
         <h1 id="pageTitle">갇힘 신고</h1>
         
-        <!-- 엘리베이터 위치 정보 -->
-        <div class="info-box">
-            <p>
-                <span id="locLabel" class="label">위치</span><br>
-                <span id="locValue" class="value">신금호역 엘리베이터 3호기</span>
-            </p>
-        </div>
-
-        <!-- 1. 문자 신고 버튼 (상단, 흰색 배경 스타일) -->
+        <!-- 1. 문자 신고 버튼 (최상단) -->
         <button class="btn btn-sms" id="btnSms" onclick="sendSMS()">
             1577-1234<br>문자 신고
         </button>
 
-        <!-- 2. 전화 연결 버튼 (하단, 빨강/주황 배경 스타일) -->
+        <!-- 2. 전화 연결 버튼 (중간) -->
         <a href="tel:02-6311-5382" class="btn btn-call" id="btnCall">
             역무실<br>통화 연결
         </a>
+
+        <!-- 3. 엘리베이터 위치 정보 박스 (하단 배치) -->
+        <div class="info-box">
+            <p>
+                <span id="locLabel" class="label">위치</span><br>
+                <span id="locValue" class="value">신금호역 엘리베이터 1호기</span>
+            </p>
+        </div>
     </div>
 
     <script>
-        // 1, 2호기 추가된 엘리베이터 데이터베이스
+        // 엘리베이터 데이터베이스 (?id=1: 1호기, ?id=2: 2호기, ?id=3: 3호기 순서 적용)
         const elevatorDatabase = {
-            "1": { // 3호기 (기존)
-                locationKo: "신금호역 엘리베이터 3호기",
-                locationEn: "Singumho Station Elevator No.3",
-                locationJa: "新金湖駅 エレベーター3号機",
-                locationZh: "新金湖站 3号电梯",
-                phone: "02-6311-5382"
-            },
-            "2": { // 1호기 (추가)
+            "1": { 
                 locationKo: "신금호역 엘리베이터 1호기",
                 locationEn: "Singumho Station Elevator No.1",
                 locationJa: "新金湖駅 エレベーター1号機",
                 locationZh: "新金湖站 1号电梯",
                 phone: "02-6311-5382"
             },
-            "3": { // 2호기 (추가)
+            "2": { 
                 locationKo: "신금호역 엘리베이터 2호기",
                 locationEn: "Singumho Station Elevator No.2",
                 locationJa: "新金湖駅 エレベーター2号機",
                 locationZh: "新金湖站 2号电梯",
                 phone: "02-6311-5382"
+            },
+            "3": { 
+                locationKo: "신금호역 엘리베이터 3호기",
+                locationEn: "Singumho Station Elevator No.3",
+                locationJa: "新金湖駅 エレベーター3号機",
+                locationZh: "新金湖站 3号电梯",
+                phone: "02-6311-5382"
             }
         };
 
-        // URL 파라미터 추출 (?id=1, ?id=2, ?id=3)
+        // URL 파라미터 추출 (?id=1, 2, 3)
         const urlParams = new URLSearchParams(window.location.search);
-        const currentId = urlParams.get('id') || "1"; // 기본값 1 (3호기)
+        const currentId = urlParams.get('id') || "1"; // 기본값 1호기
 
         // 해당 승강기 정보 불러오기
-        const currentElevator = elevatorDatabase[currentId] || {
-            locationKo: "신금호역 엘리베이터 3호기",
-            locationEn: "Singumho Station Elevator No.3",
-            locationJa: "新金湖駅 エレベーター3号機",
-            locationZh: "新金湖站 3号电梯",
-            phone: "02-6311-5382"
-        };
+        const currentElevator = elevatorDatabase[currentId] || elevatorDatabase["1"];
 
-        // 4개 언어 텍스트 정의 (타이틀 '갇힘 신고'에 맞게 수정)
+        // 4개 언어 텍스트 데이터 (위치 정보 문자 본문 연동 유지)
         const langData = {
             ko: {
                 title: "갇힘 신고",
@@ -195,21 +188,21 @@
                 getSmsBody: (loc) => `[승강기 갇힘 신고]\n- 위치: ${loc}\n승강기에 갇혔습니다. 신속한 구조 바랍니다.`
             },
             en: {
-                title: "Trapped Report", // 의미에 맞게 변경
+                title: "Trapped Report",
                 locPrefix: "Location",
                 btnSms: "Send SMS\n(1577-1234)",
                 btnCall: "Call Station\nStaff",
                 getSmsBody: (loc) => `[Elevator Emergency]\n- Location: ${loc}\nI am stuck in the elevator. Please help.`
             },
             ja: {
-                title: "閉じ込め通報", // 의미에 맞게 변경
+                title: "閉じ込め通報",
                 locPrefix: "位置",
                 btnSms: "SMSを送信\n(1577-1234)",
                 btnCall: "駅係員に\n電話する",
                 getSmsBody: (loc) => `[エレベーター閉じ込め]\n- 位置: ${loc}\nエレベーターに閉じ込められました。救助をお願いします。`
             },
             zh: {
-                title: "困人报警", // 의미에 맞게 변경
+                title: "困人报警",
                 locPrefix: "位置",
                 btnSms: "发送报警短信\n(1577-1234)",
                 btnCall: "拨打\n值班室电话",
