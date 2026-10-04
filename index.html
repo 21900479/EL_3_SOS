@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>갇힘 신고</title>
     <style>
-        /* 라이트 모드 기본 배경 */
+        /* 라이트 모드 배경 유지 */
         body {
             font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
-            background-color: #f7f9fa;
-            color: #231f20; /* CI Black (R35 G31 B32) */
+            background-color: #f0f2f5;
+            color: #1a1a1a;
             text-align: center;
             padding: 20px;
             margin: 0;
@@ -20,8 +20,8 @@
             background: #ffffff;
             padding: 30px 20px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-            border: 1px solid #e2e5e8;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e0e0e0;
         }
         
         /* 다국어 선택창 */
@@ -34,15 +34,15 @@
             font-size: 16px;
             border-radius: 5px;
             background-color: #ffffff;
-            color: #231f20;
-            border: 1px solid #666c71; /* CI SM Gray */
+            color: #333333;
+            border: 1px solid #999999;
             text-align: center;
             font-weight: bold;
         }
         
-        /* 1. 타이틀 (비율 2.0 = 48px) - CI SM Blue */
+        /* 1. 타이틀 (비율 2.0 = 48px) - 긴급 신고용 Red 적용 */
         h1 { 
-            color: #293896; /* CI SM Blue (R41 G56 B150) */
+            color: #E53935; /* 긴급 적색 */
             font-size: 48px; 
             margin: 10px 0 25px 0; 
             word-break: keep-all;
@@ -50,7 +50,7 @@
             letter-spacing: -1.5px;
         }
         
-        /* 2. 공통 버튼 스타일 (비율 1.5 = 36px) - 상단 배치 */
+        /* 2. 공통 버튼 스타일 (비율 1.5 = 36px) */
         .btn {
             display: flex;
             align-items: center;
@@ -62,8 +62,6 @@
             font-size: 36px;
             font-weight: 900;
             text-decoration: none;
-            color: #ffffff;
-            border: none;
             cursor: pointer;
             box-sizing: border-box;
             word-break: keep-all;
@@ -73,41 +71,56 @@
             letter-spacing: -1px;
         }
         
-        /* 버튼 1: 문자 신고 (상단) - CI SM Blue 활용 */
+        /* 버튼 1: 문자 신고 (상단) - 112 버튼 스타일 (흰색 바탕 + 빨강 테두리) */
         .btn-sms { 
-            background-color: #293896; /* CI SM Blue */
-            box-shadow: 0 6px 15px rgba(41, 56, 150, 0.3);
+            background-color: #ffffff; 
+            color: #E53935; 
+            border: 4px solid #E53935; 
+            box-shadow: 0 6px 15px rgba(229, 57, 53, 0.15);
         } 
         .btn-sms:active { 
-            background-color: #1e2a73; 
+            background-color: #ffebee; 
             transform: scale(0.98); 
-            box-shadow: 0 3px 8px rgba(41, 56, 150, 0.3);
+            box-shadow: 0 3px 8px rgba(229, 57, 53, 0.15);
         }
 
-        /* 버튼 2: 통화 연결 (중간) - CI SM Gold 활용 */
+        /* 버튼 2: 통화 연결 (중간) - SOS 버튼 스타일 (빨강 바탕 + 흰색 글씨) */
         .btn-call { 
-            background-color: #c59b27; /* CI SM Gold */
-            box-shadow: 0 6px 15px rgba(197, 155, 39, 0.35);
+            background-color: #E53935; 
+            color: #ffffff;
+            border: none;
+            box-shadow: 0 6px 15px rgba(229, 57, 53, 0.4);
         } 
         .btn-call:active { 
-            background-color: #a47f1c; 
+            background-color: #c62828; 
             transform: scale(0.98); 
-            box-shadow: 0 3px 8px rgba(197, 155, 39, 0.35);
+            box-shadow: 0 3px 8px rgba(229, 57, 53, 0.4);
         }
 
-        /* 3. 승강기 위치 정보 박스 (비율 1.0 = 24px) - 하단으로 이동 */
+        /* 3. 승강기 위치 정보 박스 (비율 1.0 = 24px) */
         .info-box {
             background-color: #f8f9fa;
-            padding: 20px;
             border-radius: 12px;
             margin-top: 10px;
             margin-bottom: 10px;
-            text-align: center; 
-            border: 2px solid #666c71; /* CI SM Gray */
+            border: 2px solid #546e7a; /* 안정감을 주는 다크 그레이 테두리 */
+            
+            /* 어떤 언어든 칸 크기가 변하지 않도록 고정하는 핵심 CSS */
+            min-height: 140px; 
+            padding: 10px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
         }
-        .info-box p { margin: 10px 0; line-height: 1.6; }
-        .label { font-size: 24px; color: #666c71; font-weight: bold; } /* CI SM Gray */
-        .value { font-size: 24px; color: #231f20; font-weight: 900; } /* CI Black */
+        .info-box p { 
+            margin: 0; 
+            line-height: 1.5; 
+            text-align: center;
+        }
+        .label { font-size: 24px; color: #546e7a; font-weight: bold; }
+        .value { font-size: 24px; color: #1a1a1a; font-weight: 900; }
     </style>
 </head>
 <body>
@@ -136,7 +149,7 @@
             역무실<br>통화 연결
         </a>
 
-        <!-- 3. 엘리베이터 위치 정보 박스 (하단 배치) -->
+        <!-- 3. 엘리베이터 위치 정보 박스 (하단 배치, 크기 고정됨) -->
         <div class="info-box">
             <p>
                 <span id="locLabel" class="label">위치</span><br>
@@ -146,7 +159,7 @@
     </div>
 
     <script>
-        // 엘리베이터 데이터베이스 (?id=1: 1호기, ?id=2: 2호기, ?id=3: 3호기 순서 적용)
+        // 엘리베이터 데이터베이스 (?id=1: 1호기, ?id=2: 2호기, ?id=3: 3호기 순서 일치)
         const elevatorDatabase = {
             "1": { 
                 locationKo: "신금호역 엘리베이터 1호기",
@@ -178,7 +191,7 @@
         // 해당 승강기 정보 불러오기
         const currentElevator = elevatorDatabase[currentId] || elevatorDatabase["1"];
 
-        // 4개 언어 텍스트 데이터 (위치 정보 문자 본문 연동 유지)
+        // 4개 언어 텍스트 데이터 (영어 번역 Emergency Call로 수정)
         const langData = {
             ko: {
                 title: "갇힘 신고",
@@ -188,7 +201,7 @@
                 getSmsBody: (loc) => `[승강기 갇힘 신고]\n- 위치: ${loc}\n승강기에 갇혔습니다. 신속한 구조 바랍니다.`
             },
             en: {
-                title: "Trapped Report",
+                title: "Emergency Call",
                 locPrefix: "Location",
                 btnSms: "Send SMS\n(1577-1234)",
                 btnCall: "Call Station\nStaff",
@@ -199,14 +212,14 @@
                 locPrefix: "位置",
                 btnSms: "SMSを送信\n(1577-1234)",
                 btnCall: "駅係員に\n電話する",
-                getSmsBody: (loc) => `[エレベーター閉じ込め]\n- 位置: ${loc}\nエレベーターに閉じ込められました。救助をお願いします。`
+                getSmsBody: (loc) => `[エレベーター閉じ込め]\n- 위치: ${loc}\nエレベーターに閉じ込められました。救助をお願いします。`
             },
             zh: {
                 title: "困人报警",
                 locPrefix: "位置",
                 btnSms: "发送报警短信\n(1577-1234)",
                 btnCall: "拨打\n值班室电话",
-                getSmsBody: (loc) => `[电梯困人报警]\n- 位置: ${loc}\n我被困在电梯里了，请速来救援。`
+                getSmsBody: (loc) => `[电梯困人报警]\n- 위치: ${loc}\n我被困在电梯里了，请速来救援。`
             }
         };
 
