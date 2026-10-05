@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes"> <!-- 확대/축소 허용 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>갇힘 신고 - Elevator Emergency</title>
     <style>
         /* 1. Noto Sans CJK 웹 폰트 로드 (다국어 렌더링 최적화) */
@@ -10,7 +10,6 @@
 
         /* 2. 전역 폰트 및 배경 (심리적 안정 다크 네이비) */
         body {
-            /* Fallback 폰트를 촘촘하게 배치하여 깨짐 방지 */
             font-family: 'Noto Sans KR', 'Noto Sans JP', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: #12183b; 
             color: #ffffff;
@@ -30,7 +29,7 @@
             box-sizing: border-box;
         }
         
-        /* 다국어 선택창 (접근성 라벨링 추가 대비) */
+        /* 다국어 선택창 */
         .lang-selector {
             margin-bottom: 24px;
             text-align: center;
@@ -50,14 +49,14 @@
         /* 타이틀 */
         h1 { 
             color: #FFC107; /* 구조 옐로우 */
-            font-size: clamp(32px, 8vw, 40px); /* 좁은 화면 대응 유동적 크기 */
+            font-size: clamp(32px, 8vw, 40px);
             margin: 0 0 20px 0; 
             font-weight: 900;
             letter-spacing: -1px;
             line-height: 1.2;
         }
 
-        /* 3. 승강기 위치 정보 박스 (상단으로 이동) */
+        /* 3. 승강기 위치 정보 박스 */
         .info-box {
             background-color: #12183b; 
             border-radius: 12px;
@@ -81,21 +80,21 @@
             font-weight: 700; 
         }
         .value { 
-            font-size: clamp(20px, 6vw, 26px); /* 긴 영어 텍스트 좁은 화면 대응 */
+            font-size: clamp(20px, 6vw, 26px); 
             color: #ffffff; 
             font-weight: 900; 
             letter-spacing: -0.5px;
             line-height: 1.3;
         }
         
-        /* 4. 버튼 공통 스타일 (고정 높이 폐기, 내용물에 맞게 늘어남) */
+        /* 4. 버튼 공통 스타일 */
         .btn {
             display: flex;
             align-items: center;
             justify-content: center; 
             width: 100%;
-            min-height: 120px; /* 고정 대신 최소 높이 적용 */
-            padding: 20px 16px; /* 내부 여백으로 유연성 확보 */
+            min-height: 120px; 
+            padding: 20px 16px; 
             margin-bottom: 16px;
             border-radius: 20px;
             text-decoration: none;
@@ -104,39 +103,43 @@
             transition: transform 0.1s, box-shadow 0.1s;
         }
         
+        /* [핵심] 시안(image_a6937d)의 정렬을 완벽 구현하는 Grid 래퍼 */
         .btn-content {
             display: grid;
-            grid-template-columns: 48px 1fr; 
+            grid-template-columns: 48px 1fr; /* 좌측 48px은 아이콘 고정, 우측은 텍스트 전용 영역 */
             align-items: center;
             width: 100%; 
-            max-width: 320px; /* 넘치지 않게 제한 */
-            gap: 16px; 
+            max-width: 260px; /* 전체 너비를 조여서 아이콘을 우측으로 자연스럽게 밀어냄 */
+            gap: 12px; /* 아이콘과 텍스트 사이의 간격을 기존보다 줄임 */
             margin: 0 auto; 
         }
         
+        /* SVG 아이콘 설정 */
         .btn-icon {
             width: 100%;
             height: auto;
             fill: currentColor; 
         }
+        /* 전화기 아이콘의 시각적 형태에 따른 미세 수직 보정 */
         .icon-call {
             margin-left: -2px; 
         }
 
+        /* 텍스트 완벽 중앙 정렬 (시안 반영) */
         .btn-text {
-            font-size: clamp(24px, 7vw, 30px); /* 좁은 화면 대응 */
+            font-size: clamp(24px, 7vw, 30px); 
             font-weight: 900;
             line-height: 1.25;
-            text-align: left; 
+            text-align: center; /* 상/하단 문구가 가운데 정렬되도록 변경 */
             letter-spacing: -1px;
             width: 100%;
         }
 
-        /* 버튼 1: 문자 신고 (흰 바탕 + 다크 네이비 글씨/아이콘 + 오렌지 테두리) - 명도 대비 극대화 */
+        /* 버튼 1: 문자 신고 (흰 바탕 + 다크 네이비 글씨/아이콘 + 오렌지 테두리) */
         .btn-sms { 
             background-color: #ffffff; 
-            color: #1A237E; /* 고대비 다크 네이비 */
-            border: 5px solid #FF9800; /* 오렌지 테두리 유지 */
+            color: #1A237E; 
+            border: 5px solid #FF9800; 
             box-shadow: 0 8px 16px rgba(0,0,0,0.2);
         } 
         .btn-sms:active { 
@@ -144,10 +147,10 @@
             transform: scale(0.98); 
         }
 
-        /* 버튼 2: 통화 연결 (오렌지 바탕 + 다크 네이비 글씨/아이콘) - 명도 대비 극대화 */
+        /* 버튼 2: 통화 연결 (오렌지 바탕 + 다크 네이비 글씨/아이콘) */
         .btn-call { 
             background-color: #FF9800; 
-            color: #1A237E; /* 고대비 다크 네이비 */
+            color: #1A237E; 
             border: none;
             box-shadow: 0 8px 16px rgba(255, 152, 0, 0.3);
         } 
@@ -156,10 +159,10 @@
             transform: scale(0.98); 
         }
 
-        /* 5. 행동 유도 및 매뉴얼 폴백 텍스트 (하단 추가) */
+        /* 5. 행동 유도 안내 문구 */
         .helper-text {
             font-size: 14px;
-            color: #C5CAE9; /* 연한 블루 */
+            color: #C5CAE9; 
             line-height: 1.5;
             margin-top: 20px;
         }
@@ -175,7 +178,7 @@
     <div class="container">
         <!-- 4개 국어 선택 -->
         <div class="lang-selector">
-            <label for="langSelect" style="display:none;">언어 선택</label> <!-- 접근성 라벨 -->
+            <label for="langSelect" style="display:none;">언어 선택</label>
             <select id="langSelect" onchange="changeLanguage()">
                 <option value="ko">한국어</option>
                 <option value="en">English</option>
@@ -187,7 +190,7 @@
         <!-- 타이틀 (갇힘 신고) -->
         <h1 id="pageTitle">갇힘 신고</h1>
         
-        <!-- 3. 엘리베이터 위치 정보 박스 (최상단으로 이동) -->
+        <!-- 엘리베이터 위치 정보 박스 -->
         <div class="info-box">
             <p>
                 <span id="locLabel" class="label">위치 확인</span><br>
@@ -198,6 +201,7 @@
         <!-- 1. 문자 신고 버튼 -->
         <button class="btn btn-sms" id="btnSms" onclick="sendSMS()">
             <div class="btn-content">
+                <!-- 말풍선 아이콘 -->
                 <svg class="btn-icon" viewBox="0 0 24 24">
                     <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
                 </svg>
@@ -208,6 +212,7 @@
         <!-- 2. 전화 연결 버튼 -->
         <a href="tel:02-6311-5382" class="btn btn-call" id="btnCall">
             <div class="btn-content">
+                <!-- 전화기 아이콘 -->
                 <svg class="btn-icon icon-call" viewBox="0 0 24 24">
                     <path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.2c.28-.27.36-.66.25-1.02C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/>
                 </svg>
@@ -215,7 +220,7 @@
             </div>
         </a>
 
-        <!-- 5. 행동 유도(Next step) 및 수동 전화번호 (Manual fallback) -->
+        <!-- 행동 유도(Next step) 텍스트 -->
         <div class="helper-text" id="helperText">
             문자 앱이 열리면 그대로 전송해 주세요.<br>
             역무실 직통 번호: <span class="fallback-number" id="fallbackPhone">02-6311-5382</span>
@@ -233,13 +238,12 @@
         const urlParams = new URLSearchParams(window.location.search);
         const currentId = urlParams.get('id');
 
-        // 잘못된 주소 접속 시 기본값 강제 할당 방지 및 확인 안내 처리
         const isUnknownLocation = !elevatorDatabase[currentId];
         const currentElevator = isUnknownLocation ? 
             { locationKo: "위치 확인 필요 (직원에게 역명을 알려주세요)", locationEn: "Unknown Location", locationJa: "位置確認が必要", locationZh: "需要确认位置", phone: "02-6311-5382" } 
             : elevatorDatabase[currentId];
 
-        // 4개 언어 데이터베이스
+        // 4개 언어 데이터베이스 (줄바꿈 방지 nowrap 적용)
         const langData = {
             ko: {
                 title: "갇힘 신고", locPrefix: "현재 위치",
@@ -282,7 +286,6 @@
             const lang = document.getElementById('langSelect').value;
             const locText = getCurrentLocation(lang);
             
-            // html 문서의 언어 메타데이터 업데이트 (접근성 리더기용)
             document.documentElement.lang = lang;
             
             document.getElementById('pageTitle').innerText = langData[lang].title;
@@ -292,9 +295,7 @@
             document.getElementById('textSms').innerHTML = langData[lang].btnSms;
             document.getElementById('textCall').innerHTML = langData[lang].btnCall;
             
-            // 하단 헬퍼 텍스트 업데이트
             document.getElementById('helperText').innerHTML = langData[lang].helper + `<span class="fallback-number">${currentElevator.phone}</span>`;
-            
             document.getElementById('btnCall').href = "tel:" + currentElevator.phone;
         }
 
