@@ -2,13 +2,13 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 확대 허용으로 접근성 강화 -->
     <title>갇힘 신고 - Elevator Emergency</title>
     <style>
-        /* Noto Sans CJK 웹 폰트 로드 */
+        /* 1. Noto Sans CJK 웹 폰트 로드 */
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700;900&family=Noto+Sans+KR:wght@700;900&family=Noto+Sans+SC:wght@700;900&display=swap');
 
-        /* 전역 폰트 및 배경 (다크 네이비) */
+        /* 2. 전역 폰트 및 배경 (심리적 안정 다크 네이비) */
         body {
             font-family: 'Noto Sans KR', 'Noto Sans JP', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: #12183b; 
@@ -48,54 +48,52 @@
         
         /* 타이틀 */
         h1 { 
-            color: #FFC107; 
-            font-size: clamp(32px, 8vw, 40px);
+            color: #FFC107; /* 구조 옐로우 */
+            font-size: clamp(32px, 8vw, 40px); 
             margin: 0 0 20px 0; 
             font-weight: 900;
             letter-spacing: -1px;
             line-height: 1.2;
         }
 
-        /* 3줄 분할 위치 정보 박스 */
+        /* 3. 승강기 위치 정보 박스 */
         .info-box {
             background-color: #12183b; 
             border-radius: 12px;
             margin-bottom: 24px;
             border: 2px solid #5C6BC0; 
             padding: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             box-sizing: border-box;
+            gap: 6px; 
         }
         .info-box p { 
             margin: 0; 
             text-align: center;
-            line-height: 1.35;
         }
         .label { 
-            display: block; /* 1번줄 단독 처리 */
             font-size: 16px; 
             color: #9FA8DA; 
             font-weight: 700; 
-            margin-bottom: 8px; /* 역명과 간격 확보 */
         }
         .value { 
-            display: block; /* 2번, 3번줄 단독 처리 */
-            font-size: clamp(22px, 6vw, 28px); 
+            font-size: clamp(20px, 6vw, 26px); 
             color: #ffffff; 
             font-weight: 900; 
             letter-spacing: -0.5px;
-            margin-bottom: 4px;
-        }
-        .value:last-child {
-            margin-bottom: 0;
+            line-height: 1.3;
         }
         
-        /* 버튼 공통 스타일 */
+        /* 4. 버튼 공통 스타일 */
         .btn {
             display: flex;
             align-items: center;
             justify-content: center; 
             width: 100%;
-            min-height: 120px; 
+            min-height: 150px; 
             padding: 20px 16px; 
             margin-bottom: 16px;
             border-radius: 20px;
@@ -105,37 +103,38 @@
             transition: transform 0.1s, box-shadow 0.1s;
         }
         
-        /* 버튼 정렬 Grid 래퍼 */
+        /* 정렬 유지를 위한 Grid 래퍼 (아이콘 우측 이동 및 텍스트 간격 축소를 위한 max-width 축소) */
         .btn-content {
             display: grid;
-            grid-template-columns: 48px 1fr; 
+            grid-template-columns: 68px 1fr; 
             align-items: center;
             width: 100%; 
-            max-width: 260px; 
-            gap: 12px; 
+            max-width: 340px; /* 기존 360px -> 340px 로 줄여서 안쪽으로 모아줌 */
+            gap: 16px; /* 여백 20px -> 16px 로 축소하여 응집력 강화 */
             margin: 0 auto; 
         }
         
+        /* SVG 아이콘 */
         .btn-icon {
             width: 100%;
             height: auto;
             fill: currentColor; 
         }
         .icon-call {
-            margin-left: -2px; 
+            margin-left: -3px; 
         }
 
-        /* 텍스트 완벽 중앙 정렬 */
+        /* 버튼 텍스트 */
         .btn-text {
-            font-size: clamp(24px, 7vw, 30px); 
+            font-size: clamp(26px, 8vw, 38px); 
             font-weight: 900;
             line-height: 1.25;
             text-align: center; 
-            letter-spacing: -1px;
+            letter-spacing: -1.5px; 
             width: 100%;
         }
 
-        /* 버튼 1: 문자 신고 */
+        /* 버튼 1: 문자 신고 (흰 바탕 + 다크 네이비 글씨/아이콘 + 오렌지 테두리) */
         .btn-sms { 
             background-color: #ffffff; 
             color: #1A237E; 
@@ -147,7 +146,7 @@
             transform: scale(0.98); 
         }
 
-        /* 버튼 2: 통화 연결 */
+        /* 버튼 2: 통화 연결 (오렌지 바탕 + 다크 네이비 글씨/아이콘) */
         .btn-call { 
             background-color: #FF9800; 
             color: #1A237E; 
@@ -159,7 +158,7 @@
             transform: scale(0.98); 
         }
 
-        /* 행동 유도 안내 문구 */
+        /* 5. 행동 유도 및 매뉴얼 텍스트 */
         .helper-text {
             font-size: 14px;
             color: #C5CAE9; 
@@ -176,7 +175,7 @@
 <body>
 
     <div class="container">
-        <!-- 다국어 선택 -->
+        <!-- 4개 국어 선택 -->
         <div class="lang-selector">
             <label for="langSelect" style="display:none;">언어 선택</label>
             <select id="langSelect" onchange="changeLanguage()">
@@ -187,15 +186,14 @@
             </select>
         </div>
 
-        <!-- 타이틀 -->
+        <!-- 타이틀 (갇힘 신고) -->
         <h1 id="pageTitle">갇힘 신고</h1>
         
-        <!-- 엘리베이터 위치 정보 박스 (3줄 분할) -->
+        <!-- 엘리베이터 위치 정보 박스 -->
         <div class="info-box">
             <p>
-                <span id="locLabel" class="label">현재 위치</span>
-                <span id="locStation" class="value">위치 확인 중...</span>
-                <span id="locElevator" class="value"></span>
+                <span id="locLabel" class="label">위치 확인</span><br>
+                <span id="locValue" class="value">위치 확인 중...</span>
             </p>
         </div>
 
@@ -227,29 +225,11 @@
     </div>
 
     <script>
-        // 엘리베이터 데이터베이스 (3줄 표기를 위해 station과 elevator를 분리)
+        // 엘리베이터 데이터베이스 (?id=1, 2, 3)
         const elevatorDatabase = {
-            "1": { 
-                stationKo: "신금호역", elevatorKo: "엘리베이터 1호기", 
-                stationEn: "Singumho Station", elevatorEn: "Elevator No.1", 
-                stationJa: "新金湖駅", elevatorJa: "エレベーター1号機", 
-                stationZh: "新金湖站", elevatorZh: "1号电梯", 
-                phone: "02-6311-5382" 
-            },
-            "2": { 
-                stationKo: "신금호역", elevatorKo: "엘리베이터 2호기", 
-                stationEn: "Singumho Station", elevatorEn: "Elevator No.2", 
-                stationJa: "新金湖駅", elevatorJa: "エレベーター2号機", 
-                stationZh: "新金湖站", elevatorZh: "2号电梯", 
-                phone: "02-6311-5382" 
-            },
-            "3": { 
-                stationKo: "신금호역", elevatorKo: "엘리베이터 3호기", 
-                stationEn: "Singumho Station", elevatorEn: "Elevator No.3", 
-                stationJa: "新金湖駅", elevatorJa: "エレベーター3号機", 
-                stationZh: "新金湖站", elevatorZh: "3号电梯", 
-                phone: "02-6311-5382" 
-            }
+            "1": { locationKo: "신금호역 엘리베이터 1호기", locationEn: "Singumho Station Elevator No.1", locationJa: "新金湖駅 エレベーター1号機", locationZh: "新金湖站 1号电梯", phone: "02-6311-5382" },
+            "2": { locationKo: "신금호역 엘리베이터 2호기", locationEn: "Singumho Station Elevator No.2", locationJa: "新金湖駅 エレベーター2号機", locationZh: "新金湖站 2号电梯", phone: "02-6311-5382" },
+            "3": { locationKo: "신금호역 엘리베이터 3호기", locationEn: "Singumho Station Elevator No.3", locationJa: "新金湖駅 エレベーター3号機", locationZh: "新金湖站 3号电梯", phone: "02-6311-5382" }
         };
 
         const urlParams = new URLSearchParams(window.location.search);
@@ -257,16 +237,10 @@
 
         const isUnknownLocation = !elevatorDatabase[currentId];
         const currentElevator = isUnknownLocation ? 
-            { 
-                stationKo: "위치 확인 필요", elevatorKo: "(직원에게 역명을 알려주세요)", 
-                stationEn: "Unknown Location", elevatorEn: "(Please inform staff)", 
-                stationJa: "位置確認が必要", elevatorJa: "(駅員にお伝えください)", 
-                stationZh: "需要确认位置", elevatorZh: "(请告知工作人员)", 
-                phone: "02-6311-5382" 
-            } 
+            { locationKo: "위치 확인 필요 (직원에게 역명을 알려주세요)", locationEn: "Unknown Location", locationJa: "位置確認が必要", locationZh: "需要确认位置", phone: "02-6311-5382" } 
             : elevatorDatabase[currentId];
 
-        // 4개 언어 고정 텍스트 데이터베이스
+        // 4개 언어 데이터베이스
         const langData = {
             ko: {
                 title: "갇힘 신고", locPrefix: "현재 위치",
@@ -295,24 +269,21 @@
         };
 
         function getCurrentLocation(lang) {
-            if (lang === 'en') return { station: currentElevator.stationEn, elevator: currentElevator.elevatorEn };
-            if (lang === 'ja') return { station: currentElevator.stationJa, elevator: currentElevator.elevatorJa };
-            if (lang === 'zh') return { station: currentElevator.stationZh, elevator: currentElevator.elevatorZh };
-            return { station: currentElevator.stationKo, elevator: currentElevator.elevatorKo };
+            if (lang === 'en') return currentElevator.locationEn;
+            if (lang === 'ja') return currentElevator.locationJa;
+            if (lang === 'zh') return currentElevator.locationZh;
+            return currentElevator.locationKo;
         }
 
         function changeLanguage() {
             const lang = document.getElementById('langSelect').value;
-            const locInfo = getCurrentLocation(lang);
+            const locText = getCurrentLocation(lang);
             
             document.documentElement.lang = lang;
             
             document.getElementById('pageTitle').innerText = langData[lang].title;
             document.getElementById('locLabel').innerText = langData[lang].locPrefix;
-            
-            // 역명(2번줄)과 엘리베이터 호기(3번줄) 분리 적용
-            document.getElementById('locStation').innerText = locInfo.station;
-            document.getElementById('locElevator').innerText = locInfo.elevator;
+            document.getElementById('locValue').innerText = locText;
             
             document.getElementById('textSms').innerHTML = langData[lang].btnSms;
             document.getElementById('textCall').innerHTML = langData[lang].btnCall;
@@ -321,11 +292,8 @@
             document.getElementById('btnCall').href = "tel:" + currentElevator.phone;
         }
 
-        // SMS 전송 함수: 선택된 언어와 무관하게 무조건 100% 한국어로 텍스트 생성
         function sendSMS() {
-            // 무조건 한국어 위치 정보(stationKo + elevatorKo)를 합쳐서 가져옴
-            const locTextKo = currentElevator.stationKo + " " + currentElevator.elevatorKo; 
-            
+            const locTextKo = currentElevator.locationKo; 
             const message = `[승강기 갇힘 신고]\n- 위치: ${locTextKo}\n승강기에 갇혔습니다. 신속한 구조 바랍니다.`;
             const targetNumber = "15771234";
             
